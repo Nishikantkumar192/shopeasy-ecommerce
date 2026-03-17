@@ -1,0 +1,19 @@
+const jwt=require("jsonwebtoken");
+
+module.exports.isUserExist=(req,res,next)=>{
+    const {token}=req.cookies;
+    try{
+        if(!token){
+            return res.json({success:false,message:"UnAuthorized User"});
+        }
+        const tokenDecode=jwt.verify(token,process.env.JWT_SECRET,);
+        if(tokenDecode.id){
+            req.body.userId=tokenDecode.id;
+        }else{
+            return res.json({success:true,message:"UnAuthorized User"});
+        }
+        next();
+    }catch(err){
+        return res.json({success:false,message:err.message});
+    }
+}

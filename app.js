@@ -6,6 +6,7 @@ const Port=8080;
 const app=express();
 const cookieParser=require("cookie-parser");
 const authRouter=require("./routes/auth_routes.js");
+const productRouter=require("./routes/product_routes.js");
 
 main().then(()=>{
     console.log("connected successfully");
@@ -21,4 +22,10 @@ app.use(cookieParser());
 app.listen(Port,()=>{
     console.log(`app is listening through port : ${Port}`);
 })
+
+app.get("/",(req,res)=>{
+    res.send("it's working");
+})
+
 app.use("/api/auth",authRouter);
+app.use("/api/product",productRouter);
