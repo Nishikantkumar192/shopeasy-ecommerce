@@ -23,9 +23,5 @@ app.listen(Port,()=>{
     console.log(`app is listening through port : ${Port}`);
 })
 
-app.get("/",(req,res)=>{
-    res.send("it's working");
-})
-
 app.use("/api/auth",authRouter);
 app.use("/api/product",productRouter);
