@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import ProductItem from "./components/ProductForm";
 import { ToastContainer} from 'react-toastify';
 import NoteState from "./context/NoteState";
+import AuthForm from "./components/AuthForm";
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home/>} />
           <Route exact path="/addItem" element={<ProductItem heading="Add new item" work="Add product"/>}/>
-          <Route exact path="/editItem" element={<ProductItem heading="Edit the Details" work="Edit product"/>}/>
+          <Route exact path="/log-in" element={<AuthForm/>}/>
+          <Route exact path="/sign-up" element={<AuthForm/>}/>
         </Routes>
       </Router>
     </NoteState>

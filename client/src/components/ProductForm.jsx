@@ -2,37 +2,47 @@ import { useContext, useState } from "react"
 import "../styles/components.css"
 import Button from "./Button";
 import NoteContext from "../context/NoteContext";
+import { RxCrossCircled } from "react-icons/rx";
+import { useNavigate } from "react-router-dom";
 
 const NewItem = (props) => {
+    const navigate=useNavigate();
     const context=useContext(NoteContext);
     const {addProduct}=context;
     const initialState={
         name:"",
         description:"",
         price:"",
-        image:"",
+        image:null,
         category:"",
         brand:"",
     }
     const [item,setItem]=useState(initialState);
     const handleChange=(e)=>{
-        setItem({
-            ...item,
-            [e.target.name]:e.target.value,
-        })
+        if(e.target.name==="image"){
+            setItem({
+                ...item,
+                image:e.target.files[0],
+            })
+        }else{
+            setItem({
+                ...item,
+                [e.target.name]:e.target.value,
+            })
+        }
+
     }
-    const handleSubmit=()=>{
+    const handleSubmit=(e)=>{
         e.preventDefault();
-        console.log("its working");
         addProduct(item);
-        console.log("successfully");
         setItem(initialState);
     }
   return (
-    <div className="bg-yellow-900 min-h-screen flex flex-col items-center pt-[100px]">
-      <h1 className="text-black text-3xl">{props.heading}</h1>
+    <div className="bg-gray-600 min-h-screen flex flex-col items-center pt-[100px]">
+      <h1 className="text-white font-bold text-4xl ">{props.heading}</h1>
       <div className="bg-pink-400 max-w-[400px] p-4 m-4 rounded-lg">
         <form className="form-inputs" onSubmit={handleSubmit} encType="multipart/form-data">
+        <RxCrossCircled className="w-[25px] h-[25px]" onClick={()=>navigate("/")}/>
                 <label className="font-bold" htmlFor="name">Product name</label>
             <div>
                 <input type="text" placeholder="Enter product name" id="name" name="name" value={item.name} onChange={handleChange} required/>
@@ -47,7 +57,7 @@ const NewItem = (props) => {
             </div>
                 <label className="font-bold" htmlFor="image">Product-Image</label>
             <div>
-                <input type="file" placeholder="choose the image" id="image" name="image" value={item.image} onChange={handleChange} required/>
+                <input type="file" placeholder="choose the image" id="image" name="image" onChange={handleChange} required/>
             </div>
                 <label className="font-bold" htmlFor="category">Category</label>
             <div>

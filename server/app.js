@@ -1,6 +1,8 @@
 const dotenv=require("dotenv");
-dotenv.config();
+const path=require("path");
+dotenv.config({path:path.resolve("./server/.env")});
 const express=require("express");
+const cors=require("cors");
 const mongoose=require("mongoose");
 const Port=8080;
 const app=express();
@@ -17,6 +19,8 @@ async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/E-commercial');
 }
 
+const allowedOrigin=["http://localhost:5173"]
+app.use(cors({origin:allowedOrigin,credentials:true}));
 app.use(express.json());
 app.use(cookieParser());
 app.listen(Port,()=>{

@@ -4,17 +4,27 @@ import {toast } from 'react-toastify';
 
 const NoteState = (props) => {
     const BackendUrl=import.meta.env.VITE_BACKEND_URL;
-    const addProduct= async(req,res)=>{
+
+    const addProduct= async(item)=>{
         try{
-            const {data}=await axios.post(BackendUrl+"/api/product/newItem");
-            toast.success("product added succcessfully");
+          console.log(item);
+            const {data}=await axios.post(`${BackendUrl}`+"/api/product/newItem",item);
+            toast.success(data.message);
         }catch(err){
-            toast.error(err.message);
+            toast.error(data.message);
         }
+    }
+    const newUser=async(input)=>{
+      try{
+        await axios.post(`${BackendUrl}`+"/api/auth/register",input);
+        toast.success("registered successfully");
+      }catch(err){
+        toast.error(err.message);
+      }
     }
   return (
     <div>
-      <NoteContext.Provider value={addProduct}>
+      <NoteContext.Provider value={{addProduct,newUser}}>
         {props.children}
       </NoteContext.Provider>
     </div>
