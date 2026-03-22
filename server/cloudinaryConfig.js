@@ -3,12 +3,13 @@ const {CloudinaryStorage}=require("multer-storage-cloudinary");
 
 cloudinary.config({
     cloud_name:process.env.CLOUD_NAME,
-    cloud_api_key:process.env.CLOUD_API_KEY,
-    cloud_api_secret:process.env.CLOUD_API_SECRET,
+    api_key:process.env.CLOUD_API_KEY,
+    api_secret:process.env.CLOUD_API_SECRET,   //naming convention should match other wise it will through error
 })
+
 const storage=new CloudinaryStorage({
     cloudinary:cloudinary,
-    param:{
+    params:{
         folder:"ShopEasy",
         resource_type:"auto",
     }

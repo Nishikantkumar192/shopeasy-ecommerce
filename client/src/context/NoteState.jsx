@@ -5,21 +5,20 @@ import {toast } from 'react-toastify';
 const NoteState = (props) => {
     const BackendUrl=import.meta.env.VITE_BACKEND_URL;
 
-    const addProduct= async(item)=>{
+    const addProduct= async(formData)=>{
         try{
-          console.log(item);
-            const {data}=await axios.post(`${BackendUrl}`+"/api/product/newItem",item);
+            const {data}=await axios.post(`${BackendUrl}/api/product/newItem`,formData);
             toast.success(data.message);
         }catch(err){
-            toast.error(data.message);
+            toast.error(err.message);
         }
     }
     const newUser=async(input)=>{
       try{
-        await axios.post(`${BackendUrl}`+"/api/auth/register",input);
-        toast.success("registered successfully");
+        const {data}=await axios.post(`${BackendUrl}`+"/api/auth/register",input);
+        toast.success(data.message);
       }catch(err){
-        toast.error(err.message);
+        toast.error(data.message);
       }
     }
   return (

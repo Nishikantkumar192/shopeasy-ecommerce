@@ -13,7 +13,7 @@ const NewItem = (props) => {
         name:"",
         description:"",
         price:"",
-        image:null,
+        image:null,      //no file selected yet
         category:"",
         brand:"",
     }
@@ -22,7 +22,7 @@ const NewItem = (props) => {
         if(e.target.name==="image"){
             setItem({
                 ...item,
-                image:e.target.files[0],
+                image:e.target.files[0], //there may have many files in the array so take the first one that i user has stored
             })
         }else{
             setItem({
@@ -30,11 +30,14 @@ const NewItem = (props) => {
                 [e.target.name]:e.target.value,
             })
         }
-
     }
     const handleSubmit=(e)=>{
         e.preventDefault();
-        addProduct(item);
+        const formData=new FormData(); // inbuilt js object 
+        Object.keys(item).forEach((key)=>{
+            if(item[key]) formData.append(key,item[key]);
+        })
+        addProduct(formData);
         setItem(initialState);
     }
   return (
@@ -42,7 +45,7 @@ const NewItem = (props) => {
       <h1 className="text-white font-bold text-4xl ">{props.heading}</h1>
       <div className="bg-pink-400 max-w-[400px] p-4 m-4 rounded-lg">
         <form className="form-inputs" onSubmit={handleSubmit} encType="multipart/form-data">
-        <RxCrossCircled className="w-[25px] h-[25px]" onClick={()=>navigate("/")}/>
+        <RxCrossCircled className="w-[30px] h-[30px] cursor-pointer" onClick={()=>navigate("/")}/>
                 <label className="font-bold" htmlFor="name">Product name</label>
             <div>
                 <input type="text" placeholder="Enter product name" id="name" name="name" value={item.name} onChange={handleChange} required/>
@@ -53,7 +56,7 @@ const NewItem = (props) => {
             </div>
                 <label className="font-bold" htmlFor="price">Price</label>
             <div>
-                <input type="text" placeholder="Enter the price" id="price" name="price" value={item.price} onChange={handleChange} required/>
+                <input type="number" placeholder="Enter the price" id="price" name="price" min="0" value={item.price} onChange={handleChange} required/>
             </div>
                 <label className="font-bold" htmlFor="image">Product-Image</label>
             <div>

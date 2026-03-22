@@ -9,6 +9,7 @@ const app=express();
 const cookieParser=require("cookie-parser");
 const authRouter=require("./routes/auth_routes.js");
 const productRouter=require("./routes/product_routes.js");
+const cartRouter=require("./routes/cart_routes.js");
 
 main().then(()=>{
     console.log("connected successfully");
@@ -29,3 +30,4 @@ app.listen(Port,()=>{
 
 app.use("/api/auth",authRouter);
 app.use("/api/product",productRouter);
+app.use("/api/cart",cartRouter);

@@ -1,8 +1,7 @@
 const express=require("express");
 const storage=require("../cloudinaryConfig.js");
 const multer=require("multer");
-const upload=multer(storage);
-
+const upload=multer({storage});
 const { newItem, updateItemInformation, deleteItem, getItemDetails } = require("../controller/product_controller");
 const router=express.Router();
 
