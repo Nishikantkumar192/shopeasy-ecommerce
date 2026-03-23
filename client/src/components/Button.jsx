@@ -1,7 +1,7 @@
 const Button = (props) => {
   return (
-    <div className="bg-green-900 flex justify-center">
-        <button className="cursor-pointer" type="submit">{props.work}</button>
+    <div className="flex justify-center bg-gradient-to-r from-purple-700 to-pink-500 text-white">
+        <button className="cursor-pointer w-full" type="submit">{props.work}</button>
     </div>
   )
 }

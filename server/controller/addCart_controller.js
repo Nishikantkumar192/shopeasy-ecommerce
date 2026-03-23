@@ -1,11 +1,11 @@
 const Cart=require("../models/cart.js");
 module.exports.addToCart=async(req,res)=>{
     const {userId}=req.body;
-    const {productId}=req.params;
+    const {product_id}=req.params;
     try{
         const existingItem=await Cart.findOne({
             relatedUser:userId,
-            relatedProduct:productId,
+            relatedProduct:product_id,
         });
         if(existingItem){
             existingItem.quantity+=1;
@@ -13,7 +13,7 @@ module.exports.addToCart=async(req,res)=>{
         }else{
             await Cart.create({
                 relatedUser:userId,
-                relatedProduct:productId,
+                relatedProduct:product_id,
             });
         }
         return res.json({success:true,message:"Successfully Added"});

@@ -3,7 +3,7 @@ import Button from "./Button";
 import NoteContext from "../context/NoteContext";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { FaUserAlt , FaLock,FaRegEye,FaRegEyeSlash } from "react-icons/fa";
+import { FaUserAlt , FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 const AuthForm = () => {
@@ -24,20 +24,23 @@ const AuthForm = () => {
             [e.target.name]:e.target.value,
         })
     }
+    const show_hidePassword=()=>{
+        if(visibility===true) setVisibility(false);
+        else setVisibility(true);
+    }
     const handleSubmit=(e)=>{
         try{
             e.preventDefault();
             newUser(input);
             setInput(initialState);
-            navigate("/")
         }catch(err){
             toast.error(err.message);
         }
     }
   return (
-    <div className="bg-gray-600 min-h-screen flex flex-col pt-[100px] items-center p-[2rem]">
+    <div className="bg-[url(/images/backgroundImg.jpg)] bg-cover min-h-screen flex flex-col pt-[100px] items-center p-[2rem]">
         <h1 className="text-4xl font-bold text-white">{state} YourSelf</h1>
-        <div className="form-inputs bg-pink-400 p-8 mt-4 rounded-lg">
+        <div className="form-inputs bg-white/10 backdrop-blur-md p-8 mt-4 rounded-lg">
             <form onSubmit={handleSubmit}>
                 {state==="Sign-up" && <label className="font-bold" htmlFor="username">Username</label>}
                 {state==="Sign-up" &&
@@ -54,10 +57,9 @@ const AuthForm = () => {
                 <div>
                     <FaLock/>
                     <input type={visibility===true?"password":"text"} id="password" name="password" placeholder="Enter your password" value={input.password} onChange={handleChange} required />
-                   {visibility===true?<FaRegEyeSlash onClick={()=>setVisibility(false)}/>:
-                    <FaRegEye onClick={()=>setVisibility(true)}/>}
+                   {visibility===true?<span className="text-sm" onClick={show_hidePassword}>Show</span>:<span className="text-sm" onClick={show_hidePassword}>Hide</span>}
                 </div>
-                <Link className="text-blue-900 underline mb-[10px] block" to="/forget-password">forget password?</Link>
+                <Link className="text-black underline mb-[10px] block" to="/forget-password">forget password?</Link>
                 <Button work={state}/>
             </form>
             {state==="Sign-up"?<p>Already have an account? <span className="text-blue-900 underline cursor-pointer" onClick={()=>{setState("Log-in"),setInput(initialState)}}>log-in</span></p>:
