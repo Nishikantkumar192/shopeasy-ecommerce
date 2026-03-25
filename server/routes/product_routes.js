@@ -3,10 +3,11 @@ const storage=require("../cloudinaryConfig.js");
 const multer=require("multer");
 const upload=multer({storage});
 const { newItem, updateItemInformation, deleteItem, getItemDetails } = require("../controller/product_controller");
+const { isAdmin,isUserExist } = require("../middleware");
 const router=express.Router();
 
-router.post("/newItem",upload.single("image"),newItem);
-router.get("/updateItemInformation/:id",getItemDetails);
-router.post("/updateItemInformation/:id",updateItemInformation);
-router.post("/deleteItem/:id",deleteItem);
+router.post("/newItem",isUserExist,isAdmin,upload.single("image"),newItem);
+router.get("/updateItemInformation/:id",isUserExist,isAdmin,getItemDetails);
+router.post("/updateItemInformation/:id",isUserExist,isAdmin,updateItemInformation);
+router.post("/deleteItem/:id",isUserExist,isAdmin,deleteItem);
 module.exports=router;

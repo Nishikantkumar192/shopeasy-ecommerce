@@ -2,14 +2,12 @@ const Product=require("../models/product.js");
 
 module.exports.newItem=async(req,res)=>{
     try{
-        //error in req.file 
-        console.log("fileInfo  --->  ",req.file);
         const url=req.file.path;
         const filename=req.file.filename;
         const newItem=await Product.create(req.body);
         newItem.image={url,filename};
         await newItem.save();
-        return res.json({success:true,message:"item added successfully"});
+        return res.json({success:true,message:"product added successfully"});
     }catch(err){
         return res.json({success:false,message:err.message});
     }

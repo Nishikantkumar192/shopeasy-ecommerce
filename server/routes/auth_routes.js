@@ -5,7 +5,7 @@ const router=express.Router();
 
 router.post("/register",register);
 router.post("/login",login);
-router.post("/logout",logout);
-router.post("/otpVerification",isUserExist,verificationOtp);
+router.get("/logout",logout);
+router.get("/otpVerification",isUserExist,verificationOtp);
 router.post("/verifyOtp",isUserExist,verifyOtp);
 module.exports=router;

@@ -1,13 +1,12 @@
 import NoteContext from "./NoteContext"
-import axios from "axios";
+import api from "../api/axios";
 import {toast } from 'react-toastify';
 
 const NoteState = (props) => {
-    const BackendUrl=import.meta.env.VITE_BACKEND_URL;
 
     const addProduct= async(formData)=>{
         try{
-            const {data}=await axios.post(`${BackendUrl}/api/product/newItem`,formData);
+            const {data}=await api.post("/api/product/newItem",formData);
             toast.success(data.message);
         }catch(err){
             toast.error(err.message);
@@ -15,10 +14,10 @@ const NoteState = (props) => {
     }
     const newUser=async(input)=>{
       try{
-        const {data}=await axios.post(`${BackendUrl}`+"/api/auth/register",input);
+        const {data}=await api.post("/api/auth/register",input);
         toast.success(data.message);
       }catch(err){
-        toast.error(data.message);
+        toast.error(err.message);
       }
     }
   return (

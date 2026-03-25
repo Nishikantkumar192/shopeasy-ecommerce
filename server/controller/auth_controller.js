@@ -18,8 +18,8 @@ module.exports.register=async(req,res)=>{
         const token=jwt.sign({id:newUser._id},process.env.JWT_SECRET,{expiresIn:'14d'});
         res.cookie("token",token,{
             httpOnly:true,
-            secure:process.env.NODE_ENV==="production",
-            sameSite:process.env.NODE_ENV==="production"?"none":"strict",
+            secure:false,
+            sameSite:"lax",
             maxAge:14*24*60*60*1000,
         })
         const emailSend={
@@ -49,8 +49,8 @@ module.exports.login=async(req,res)=>{
         const token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:'14d'});
         res.cookie("token",token,{
             httpOnly:true,
-            secure:process.env.NODE_ENV==="production",
-            sameSite:process.env.NODE_ENV==="production"?"none":"strict",
+            secure:false,
+            sameSite:"lax",
             maxAge:14*24*60*60*1000,
         })
         return res.json({sucess:true,message:"Logged-in successfully"});
@@ -73,7 +73,7 @@ module.exports.logout=(req,res)=>{
 }
 
 module.exports.verificationOtp=async(req,res)=>{
-    const {userId}=req.body; 
+    const userId=req.user.id; 
     try{
         const user=await User.findById(userId);
         const otp=Math.floor(100000+Math.random()*900000);
@@ -100,7 +100,8 @@ module.exports.verificationOtp=async(req,res)=>{
     }
 }
 module.exports.verifyOtp=async(req,res)=>{
-    const {userId,otp}=req.body;
+    const userId=req.user.id;
+    const {otp}=req.body;
     try{
         const user=await User.findById(userId);
         if(otp!==user.verifyOtp){

@@ -59,11 +59,11 @@ const AuthForm = () => {
                     <input type={visibility===true?"password":"text"} id="password" name="password" placeholder="Enter your password" value={input.password} onChange={handleChange} required />
                    {visibility===true?<span className="text-sm" onClick={show_hidePassword}>Show</span>:<span className="text-sm" onClick={show_hidePassword}>Hide</span>}
                 </div>
-                <Link className="text-black underline mb-[10px] block" to="/forget-password">forget password?</Link>
+                {state==="Log-in" && <Link className="text-black underline mb-[10px] block" to="/forget-password">forget password?</Link>}
                 <Button work={state}/>
             </form>
             {state==="Sign-up"?<p>Already have an account? <span className="text-blue-900 underline cursor-pointer" onClick={()=>{setState("Log-in"),setInput(initialState)}}>log-in</span></p>:
-            <p>Create an account? <span className="text-blue-900 underline cursor-pointer" onClick={()=>{setState("Sign-up"),setInput(initialState)}}>Sign-up</span></p>}
+            <p>Create an account? <span className="text-blue-900 underline cursor-pointer text-white" onClick={()=>{setState("Sign-up"),setInput(initialState)}}>Sign-up</span></p>}
         </div>
     </div>
   )
