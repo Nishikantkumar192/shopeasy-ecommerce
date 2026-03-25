@@ -5,9 +5,7 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { FaUserAlt , FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 const AuthForm = () => {
-    const navigate=useNavigate();
     const context=useContext(NoteContext);
     const {newUser}=context;
     const initialState={
@@ -31,7 +29,15 @@ const AuthForm = () => {
     const handleSubmit=(e)=>{
         try{
             e.preventDefault();
-            newUser(input);
+            if(state==="Sign-up"){
+                newUser("/api/auth/register",input);
+            }else{
+                const payload={
+                    email:input.email,
+                    password:input.password,
+                }
+                newUser("/api/auth/login",payload);
+            }
             setInput(initialState);
         }catch(err){
             toast.error(err.message);

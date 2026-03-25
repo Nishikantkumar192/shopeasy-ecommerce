@@ -41,7 +41,7 @@ const NewItem = (props) => {
         setItem(initialState);
     }
   return (
-    <div className="bg-gray-600 min-h-screen flex flex-col items-center pt-[100px]">
+    <div className="bg-gray-600 min-h-screen flex flex-col items-center pt-[80px]">
       <h1 className="text-white font-bold text-4xl ">{props.heading}</h1>
       <div className="bg-pink-400 max-w-[400px] p-4 m-4 rounded-lg">
         <form className="form-inputs" onSubmit={handleSubmit} encType="multipart/form-data">
