@@ -66,7 +66,7 @@ module.exports.logout=(req,res)=>{
             secure:process.env.NODE_ENV==="production",
             sameSite:process.env.NODE_ENV==="production"?"none":"strict",
         })
-        return res.json({success:true,message:"Successfully Logout"});
+        return res.json({success:true,message:"Logout successfully"});
     }catch(err){
         return res.json({success:false,message:err.message});
     }

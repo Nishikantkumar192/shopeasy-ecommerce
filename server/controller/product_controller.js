@@ -36,7 +36,7 @@ module.exports.getItemDetails=async(req,res)=>{
         if(!item){
             return res.json({success:false,message:"Unavailable Item"});
         }
-        return res.json(item);
+        return res.json({success:true,message:"information fetch",item});
     }catch(err){
         return res.json({success:false,message:err.message});
     }
@@ -66,7 +66,7 @@ module.exports.deleteItem=async(req,res)=>{
             return res.json({success:false,message:"product not found"});
         }
         await Product.findByIdAndDelete(id);
-        res.json({success:true,message:"Item Deleted Successfully"});
+        return res.json({success:true,message:"Item Deleted Successfully"});
     }catch(err){
         return res.json({success:false,message:err.message});
     }

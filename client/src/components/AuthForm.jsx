@@ -45,8 +45,9 @@ const AuthForm = () => {
     }
   return (
     <div className="bg-[url(/images/backgroundImg.jpg)] bg-cover min-h-screen flex flex-col pt-[100px] items-center p-[2rem]">
-        <h1 className="text-4xl font-bold text-white">{state} YourSelf</h1>
-        <div className="form-inputs bg-white/10 backdrop-blur-md p-8 mt-4 rounded-lg">
+        <div className="form-inputs bg-white/10 backdrop-blur-md p-8 rounded-lg">
+        <h1 className="text-4xl mb-4 font-bold text-white">{state}</h1>
+
             <form onSubmit={handleSubmit}>
                 {state==="Sign-up" && <label className="font-bold" htmlFor="username">Username</label>}
                 {state==="Sign-up" &&

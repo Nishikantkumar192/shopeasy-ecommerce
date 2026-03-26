@@ -3,6 +3,7 @@ const { register, login, logout, verificationOtp, verifyOtp } = require("../cont
 const { isUserExist } = require("../middleware");
 const router=express.Router();
 
+router.get("/UserExist",isUserExist);
 router.post("/register",register);
 router.post("/login",login);
 router.get("/logout",logout);

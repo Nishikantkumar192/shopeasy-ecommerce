@@ -42,10 +42,11 @@ const NewItem = (props) => {
     }
   return (
     <div className="bg-gray-600 min-h-screen flex flex-col items-center pt-[80px]">
+      <div className="bg-pink-400 max-w-[400px] p-4 m-4 rounded-lg relative">
       <h1 className="text-white font-bold text-4xl ">{props.heading}</h1>
-      <div className="bg-pink-400 max-w-[400px] p-4 m-4 rounded-lg">
+
         <form className="form-inputs" onSubmit={handleSubmit} encType="multipart/form-data">
-        <RxCrossCircled className="w-[30px] h-[30px] cursor-pointer" onClick={()=>navigate("/")}/>
+        <RxCrossCircled className="w-[30px] h-[30px] cursor-pointer absolute top-6 right-2" onClick={()=>navigate("/")}/>
                 <label className="font-bold" htmlFor="name">Product name</label>
             <div>
                 <input type="text" placeholder="Enter product name" id="name" name="name" value={item.name} onChange={handleChange} required/>
