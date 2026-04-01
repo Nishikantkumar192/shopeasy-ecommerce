@@ -53,7 +53,7 @@ module.exports.updateItemInformation=async(req,res)=>{
             {$set:req.body},
             {new:true},
         )
-        res.json(updatedItem);
+        res.json({success:true,message:"updated successfull",updatedItem});
     }catch(err){
         return res.json({success:false,message:err.message});
     }

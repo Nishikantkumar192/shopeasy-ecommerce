@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import NoteContext from "../context/NoteContext";
+import { Link } from "react-router-dom";
 
 const DisplayProduct = ({ item }) => {
   const context=useContext(NoteContext);
@@ -25,7 +26,7 @@ const DisplayProduct = ({ item }) => {
         Brand: {item.brand}
       </p>
 
-    <div className="p-4"><button className="underline cursor-pointer" onClick={()=>getItemInformation(item._id)}>Edit</button> &nbsp;&nbsp;&nbsp;
+    <div className="p-4"><Link to={`/UpdateProductDetails/${item._id}`}>Update</Link> &nbsp;&nbsp;&nbsp;
           <button className="underline cursor-pointer" onClick={()=>deleteProduct(item._id)}>Delete</button></div>
     </div>
   );
