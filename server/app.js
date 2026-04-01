@@ -10,6 +10,7 @@ const cookieParser=require("cookie-parser");
 const authRouter=require("./routes/auth_routes.js");
 const productRouter=require("./routes/product_routes.js");
 const cartRouter=require("./routes/cart_routes.js");
+const ExpressError = require("./utils/ExpressError.js");
 
 main().then(()=>{
     console.log("connected successfully");
@@ -31,3 +32,11 @@ app.listen(Port,()=>{
 app.use("/api/auth",authRouter);
 app.use("/api/product",productRouter);
 app.use("/api/cart",cartRouter);
+
+app.use((req,res,next)=>{
+    return next(new ExpressError(400,"Page Not Found"));
+})
+app.use((err,req,res,next)=>{
+    const {status=500,message="Server Error"}=err;
+    return res.status(status).json({success:false,message:message});
+})

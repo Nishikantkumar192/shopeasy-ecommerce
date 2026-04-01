@@ -9,6 +9,6 @@ const router=express.Router();
 router.get("/getProducts",getProducts);
 router.post("/newItem",isUserExist,isAdmin,upload.single("image"),newItem);
 router.get("/updateItemInformation/:id",isUserExist,isAdmin,getItemDetails);
-router.post("/updateItemInformation/:id",isUserExist,isAdmin,updateItemInformation);
+router.post("/updateItemInformation/:id",isUserExist,isAdmin,upload.single("image"),updateItemInformation);
 router.get("/deleteItem/:id",isUserExist,isAdmin,deleteItem);
 module.exports=router;

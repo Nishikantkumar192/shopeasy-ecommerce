@@ -16,7 +16,7 @@ const Newdetails = (props) => {
       name: props.info.name || "",
       description: props.info.description || "",
       price: props.info.price || "",
-      image: props.info.image || null,
+      image: null,
       category: props.info.category || "",
       brand: props.info.brand || "",
     });
@@ -76,7 +76,7 @@ const Newdetails = (props) => {
             </div>
                 <label className="font-bold" htmlFor="image">Product-Image</label>
             <div>
-                <input type="file" id="image" name="image" onChange={handleChange} required/>
+                <input type="file" id="image" name="image" onChange={handleChange} required={props.type!=="edit"}/>
             </div>
                 <label className="font-bold" htmlFor="category">Category</label>
             <div>
