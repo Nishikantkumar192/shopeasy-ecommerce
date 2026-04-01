@@ -42,6 +42,7 @@ module.exports.register = wrapAsync(async (req, res, next) => {
   return res.json({
     success: true,
     message: "You have registered successfully",
+    user:newUser,
   });
 });
 
@@ -64,7 +65,7 @@ module.exports.login = wrapAsync(async (req, res, next) => {
     sameSite: "lax",
     maxAge: 14 * 24 * 60 * 60 * 1000,
   });
-  return res.json({ sucess: true, message: "Logged-in successfully" });
+  return res.json({ success: true, message: "Logged-in successfully" ,user});
 });
 
 module.exports.logout = (req, res) => {

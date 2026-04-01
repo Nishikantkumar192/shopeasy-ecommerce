@@ -2,9 +2,13 @@ import NoteContext from "./NoteContext"
 import api from "../api/axios";
 import {toast } from 'react-toastify';
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const NoteState = (props) => {
+  const navigate=useNavigate();
   const [products,setProducts]=useState([]);
+  const [isLoggedIn,setIsLoggedIn]=useState(null);
 
     const addProduct= async(formData)=>{
         try{
@@ -18,11 +22,15 @@ const NoteState = (props) => {
     const newUser=async(url,input)=>{
       try{
         const {data}=await api.post(url,input);
+        if(data.success===true){
+          setIsLoggedIn(data.user);
+          navigate("/");
+        }
         toast.success(data.message);
       }catch(err){
         toast.error(err.response?.data?.message || err.message);
 
-        //err.response?.data?.message      how it works.
+        //err.response?.data?.message      // HOW IT WORKS DISCUSSED BELOW
           //err = {
           //   message: "Request failed with status code 404",
           //   response: {
@@ -40,6 +48,9 @@ const NoteState = (props) => {
       const LogoutUser=async()=>{
         try{
           const {data}=await api.get("/api/auth/logout");
+          if(data.success===true){
+            setIsLoggedIn(null);
+          }
           toast.success(data.message);
         }catch(err){
           toast.error(err.response?.data?.message || err.message);
@@ -75,7 +86,7 @@ const NoteState = (props) => {
     }
     const values={
       addProduct,newUser,getProducts,products
-      ,deleteProduct,LogoutUser,CallUpdateDetails
+      ,deleteProduct,LogoutUser,CallUpdateDetails,isLoggedIn
     }
   return (
     <div>

@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 const DisplayProduct = ({ item }) => {
   const context=useContext(NoteContext);
-  const {getItemInformation,deleteProduct}=context;
+  const {deleteProduct}=context;
   return (
-    <div className="relative flex flex-col bg-white rounded-lg hover:opacity-85 w-64">
+    <div className="relative flex flex-col bg-white rounded-lg hover:opacity-90 w-64">
       
       <img
         src={item?.image?.url}
@@ -26,8 +26,8 @@ const DisplayProduct = ({ item }) => {
         Brand: {item.brand}
       </p>
 
-    <div className="p-4"><Link to={`/UpdateProductDetails/${item._id}`}>Update</Link> &nbsp;&nbsp;&nbsp;
-          <button className="underline cursor-pointer" onClick={()=>deleteProduct(item._id)}>Delete</button></div>
+    <div className="p-4"><Link className="hover:text-blue-900" to={`/UpdateProductDetails/${item._id}`}>Update</Link> &nbsp;&nbsp;&nbsp;
+          <button className="cursor-pointer hover:text-blue-900" onClick={()=>deleteProduct(item._id)}>Delete</button></div>
     </div>
   );
 };

@@ -34,18 +34,21 @@ module.exports.getItemDetails = wrapAsync(async (req, res, next) => {
   return res.json({ success: true, message: "information fetch", item });
 });
 
-// HERE I HAVE TO TAKE IMAGE INFO COMING FROM FRONTEND
 module.exports.updateItemInformation = wrapAsync(async (req, res, next) => {
   const { id } = req.params;
   const item = await Product.findById(id);
   if (!item) {
     return next(new ExpressError(404, "UnAvailable product"));
   }
+  //check if the details come from the body then update them otherwise remains other unchanged.
   if(req.file){
     item.image.url=req.file.path;
     item.image.filename=req.file.filename;
   }
   const updatedItem=Object.assign(item, req.body);
+  updatedItem.name=updatedItem.name.toLowerCase();
+  updatedItem.category=updatedItem.category.toLowerCase();
+  updatedItem.brand=updatedItem.brand.toLowerCase();
   item.save();
   res.json({ success: true, message: "updated successfull", updatedItem });
 });
