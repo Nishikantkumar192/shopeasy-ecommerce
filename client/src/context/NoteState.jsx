@@ -103,8 +103,11 @@ const NoteState = (props) => {
       if (data.success === true) {
         const updateChange = products.filter((product) => product._id !== id);
         setProducts(updateChange);
+        navigate("/");
+        toast.success(data.message);
+      }else{
+        toast.error(data.message);
       }
-      toast.success(data.message);
     } catch (err) {
       toast.error(err.response?.data?.message || err.message);
     }

@@ -18,3 +18,8 @@ module.exports.addToCart = wrapAsync(async (req, res) => {
   }
   return res.json({ success: true, message: "Successfully Added", });
 });
+module.exports.getCartItems=wrapAsync(async(req,res)=>{
+  const userId=req.user.id;
+  const products=await Cart.find({relatedUser:userId}).populate("relatedProduct"); 
+  return res.json(products);
+})

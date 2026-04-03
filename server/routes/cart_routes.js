@@ -1,7 +1,8 @@
 const express=require("express");
-const { addToCart } = require("../controller/addCart_controller");
+const { addToCart, getCartItems } = require("../controller/addCart_controller");
 const { isUserExist } = require("../middleware");
 const router=express.Router();
 
 router.post("/addToCart/:id",isUserExist,addToCart);
+router.get("/cart-items",isUserExist,getCartItems);
 module.exports=router;
