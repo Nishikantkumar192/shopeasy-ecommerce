@@ -128,3 +128,9 @@ module.exports.verifyOtp = wrapAsync(async (req, res, next) => {
     message: "Account Verified Successfully",
   });
 });
+
+module.exports.isLoggedIn=async(req,res)=>{
+  const userId=req.user.id;
+  const user=await User.findById(userId);
+  return res.json({success:true,user});
+}

@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import NoteState from "./context/NoteState";
 import AuthForm from "./components/AuthForm";
 import UpdateProductDetails from "./pages/UpdateProductDetails";
+import ParticularProductDetails from "./pages/ParticularProductDetails";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           />
           <Route exact path="/log-in" element={<AuthForm />} />
           <Route exact path="/sign-up" element={<AuthForm />} />
+          <Route exact path="/specificItem" element={<ParticularProductDetails/>}/>
         </Routes>
       </NoteState>
     </Router>

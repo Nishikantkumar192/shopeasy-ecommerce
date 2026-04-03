@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom"
 import { toast } from "react-toastify"
 import api from "../api/axios"
 
-//  ERROR IN SENDING MAY BE DUE TO IMAGE FILE. CONTINUE LATER WITH IT....
 const UpdateProductDetails = () => {
     const {id}=useParams();    //useParam() returns an object
     useEffect(()=>{

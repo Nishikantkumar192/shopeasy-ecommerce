@@ -62,3 +62,9 @@ module.exports.deleteItem = wrapAsync(async (req, res, next) => {
   await Product.findByIdAndDelete(id);
   return res.json({ success: true, message: "Item Deleted Successfully" });
 });
+
+module.exports.getDetail=wrapAsync(async(req,res)=>{
+  const {id}=req.params;
+  const product=await Product.findById(id);
+  return res.json({success:true,product});
+})
