@@ -9,7 +9,7 @@ const NoteState = (props) => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(null);
-  const [specificItem,setSpecificItem]=useState({});
+  const [specificItem,setSpecificItem]=useState(null);
 
   useEffect(() => {
     isValid();

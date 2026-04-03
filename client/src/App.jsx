@@ -35,7 +35,7 @@ function App() {
           />
           <Route exact path="/log-in" element={<AuthForm />} />
           <Route exact path="/sign-up" element={<AuthForm />} />
-          <Route exact path="/specificItem" element={<ParticularProductDetails/>}/>
+          <Route exact path="/specificItem/:id" element={<ParticularProductDetails/>}/>
         </Routes>
       </NoteState>
     </Router>

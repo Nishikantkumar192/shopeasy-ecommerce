@@ -1,11 +1,11 @@
 const Cart = require("../models/cart.js");
 const { wrapAsync } = require("../utils/wrapAsync.js");
 module.exports.addToCart = wrapAsync(async (req, res) => {
-  const { userId } = req.body;
-  const { product_id } = req.params;
+  const userId=req.user.id;
+  const {id} = req.params;
   const existingItem = await Cart.findOne({
     relatedUser: userId,
-    relatedProduct: product_id,
+    relatedProduct: id,
   });
   if (existingItem) {
     existingItem.quantity += 1;
@@ -13,8 +13,8 @@ module.exports.addToCart = wrapAsync(async (req, res) => {
   } else {
     await Cart.create({
       relatedUser: userId,
-      relatedProduct: product_id,
+      relatedProduct: id,
     });
   }
-  return res.json({ success: true, message: "Successfully Added" });
+  return res.json({ success: true, message: "Successfully Added", });
 });

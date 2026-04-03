@@ -1,9 +1,24 @@
-import { useContext } from "react"
+import { useContext,useEffect } from "react"
 import NoteContext from "../context/NoteContext"
+import { toast } from "react-toastify";
+import api from "../api/axios";
+import { useParams } from "react-router-dom";
 
 const ParticularProductDetails = () => {
-  const { specificItem } = useContext(NoteContext);
+  const {id}=useParams();
+  const { specificItem,getSpecificDetail } = useContext(NoteContext);
+  useEffect(()=>{
+    getSpecificDetail(id);
+  })
 
+  const addToCart=async()=>{
+    try{
+      const {data}=await api.post(`/api/cart/addToCart/${specificItem._id}`);
+      toast.success(data.message);
+    }catch(err){
+      toast.error(err.response?.data?.message || err.message);
+    }
+  }
   if (!specificItem) {
     return <div className="text-center mt-20 text-xl">Loading...</div>;
   }
@@ -34,8 +49,8 @@ const ParticularProductDetails = () => {
 
           {/* buttons */}
           <div>
-            <button className="bg-yellow-500 p-2 hover:opacity-80 rounded-lg text-xl">Add To Cart</button>&nbsp; &nbsp;
-            <button className="bg-orange-400 p-2 hover:opacity-80 rounded-lg text-xl">Buy Now</button>
+            <button className="bg-yellow-500 p-2 hover:opacity-80 rounded-lg text-xl" onClick={()=>addToCart()}>Add To Cart</button>&nbsp; &nbsp;
+            <button className="bg-orange-400 p-2 hover:opacity-80 rounded-lg text-xl" onClick={()=>BuyNow()}>Buy Now</button>
           </div>
         </div>
       </div>

@@ -1,40 +1,20 @@
-import { useContext } from "react";
-import NoteContext from "../context/NoteContext";
 import { Link } from "react-router-dom";
 
 const DisplayProduct = ({ item }) => {
-  const context = useContext(NoteContext);
-  const { deleteProduct,getSpecificDetail } = context;
-
   return (
-    <Link to={"/specificItem"} onClick={()=>getSpecificDetail(item._id)}>
-    <div className="relative flex flex-col bg-white rounded-lg w-64 hover:-translate-y-1 transition-all duration-300">
-      <img
-        src={item?.image?.url}
-        alt="product"
-        className="w-full h-40 object-cover rounded-t-lg"
-      />
-      <h3 className="text-lg font-semibold mt-3 pl-4 text-gray-800">
-        {item.name}
-      </h3>
-      <p className="text-gray-600 mt-1 pl-4">₹{item.price}</p>
-      <p className="text-gray-600 mt-1 pl-4">Brand: {item.brand}</p>
-      {/* <div className="p-4">
-        <Link
-          className="hover:text-blue-900"
-          to={`/UpdateProductDetails/${item._id}`}
-        >
-          Update
-        </Link>{" "}
-        &nbsp;&nbsp;&nbsp;
-        <button
-          className="cursor-pointer hover:text-blue-900"
-          onClick={() => deleteProduct(item._id)}
-        >
-          Delete
-        </button>
-      </div> */}
-    </div>
+    <Link to={`/specificItem/${item._id}`}>
+      <div className="bg-white rounded-lg w-80">
+        <div className="flex justify-center items-center overflow-hidden">
+          <img src={item?.image?.url} alt="product" className="w-full h-44 object-cover hover:scale-110 transition duration-300 rounded-lg" />
+        </div>
+        <div className="p-3">
+          <span className="line-through text-xl">&#8377;{item?.oldPrice}</span> &nbsp; &nbsp; 
+          <span className="text-xl">&#8377;{item?.price}</span>
+          <p className="text-2xl text-bold">{item?.name}</p>
+          <p className="text-green-400 text-bold text-xl">Discount: {item?.discount}%</p>
+          <p className={`text-xl ${item.isAvailable?"text-green-600":"text-red-500"}`}>{item?.isAvailable?"In Stock":"Out of Stock"}</p>
+        </div>
+      </div>
     </Link>
   );
 };
