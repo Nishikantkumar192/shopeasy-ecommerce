@@ -118,7 +118,12 @@ const NoteState = (props) => {
         `/api/product/updateItemInformation/${id}`,
         formData,
       );
-      toast.success(data.message);
+      if(data.success){
+        navigate("/");
+        toast.success(data.message);
+      }else{
+        toast.error(data.message);
+      }
     } catch (err) {
       toast.error(err.response?.data?.message || err.message);
     }

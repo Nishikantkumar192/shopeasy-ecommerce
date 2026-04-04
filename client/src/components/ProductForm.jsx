@@ -15,7 +15,7 @@ const Newdetails = (props) => {
       setDetails({
         name: props.info.name || "",
         description: props.info.description || "",
-        oldPrice:props.info.price || "",
+        oldPrice:props.info.oldPrice || "",
         price: props.info.price || "",
         discount:props.info.discount || "",
         image: null,
@@ -143,7 +143,6 @@ const Newdetails = (props) => {
               min="0"
               value={details.discount}
               onChange={handleChange}
-              required
             />
           </div>
           <div>

@@ -44,11 +44,11 @@ const ParticularProductDetails = () => {
 
           {/* price,description ,stock */}
           <div className="">
-            <p className="text-bold text-3xl">{specificItem?.name}</p>
+            <p className="text-bold text-3xl text-red-400">{specificItem?.name}</p>
             <p className="text-bold text-2xl">{specificItem?.description}</p>
-            <span className={`text-bold text-xl ${specificItem.oldPrice && "line-through"}`}>&#8377;{specificItem?.oldPrice}</span> &nbsp; &nbsp;
+            {specificItem.oldPrice<specificItem.price && <span className={`text-bold text-xl ${specificItem.oldPrice && "line-through"}`}>&#8377;{specificItem?.oldPrice}</span>} &nbsp; &nbsp;
             <span className="text-bold text-xl">&#8377;{specificItem?.price}</span>
-            <p className="text-green-400">Discount: {specificItem?.discount}%</p>
+            {specificItem?.discount!==0 && <p className="text-green-400">Discount: {specificItem?.discount}%</p>}
           </div>
 
           {/* buttons */}

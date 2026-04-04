@@ -22,12 +22,12 @@ const ShowProduct = ({item,quantity,updatedAt}) => {
           />
         </div>
         <div className="p-3">
-          <span className="line-through text-xl">&#8377;{item?.oldPrice}</span>{" "}
+          {item.oldPrice<item.price && <span className="line-through text-xl">&#8377;{item?.oldPrice}</span>}{" "}
           <span className="text-xl">&#8377;{item?.price}</span>
           <p className="text-2xl text-bold">{item?.name}</p>
-          <p className="text-green-400 text-bold text-xl">
+          {item?.discount>0 && <p className="text-green-400 text-bold text-xl">
             Discount: {item?.discount}%
-          </p>
+          </p>}
           <p
             className={`text-xl ${item.isAvailable ? "text-green-600" : "text-red-500"}`}
           >

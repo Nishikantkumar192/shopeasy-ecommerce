@@ -4,7 +4,7 @@ const {CloudinaryStorage}=require("multer-storage-cloudinary");
 cloudinary.config({
     cloud_name:process.env.CLOUD_NAME,
     api_key:process.env.CLOUD_API_KEY,
-    api_secret:process.env.CLOUD_API_SECRET,   //naming convention should match other wise it will through error
+    api_secret:process.env.CLOUD_API_SECRET,   //naming convention should match otherwise it will through error
 })
 
 const storage=new CloudinaryStorage({

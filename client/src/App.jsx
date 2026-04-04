@@ -9,6 +9,7 @@ import AuthForm from "./components/AuthForm";
 import UpdateProductDetails from "./pages/UpdateProductDetails";
 import ParticularProductDetails from "./pages/ParticularProductDetails";
 import CartItems from "./pages/CartItems";
+import FilterProducts from "./pages/FilterProducts";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route exact path="/specificItem/:id" element={<ParticularProductDetails/>}/>
           <Route exact path="/updateItemInformation/:id" element={<UpdateProductDetails/>}/>
           <Route exact path="/cart-items/:id" element={<CartItems/>}/>
+          <Route exact path="/filter-products" element={<FilterProducts/>}/>
         </Routes>
       </NoteState>
     </Router>

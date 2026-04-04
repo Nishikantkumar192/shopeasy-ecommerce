@@ -7,9 +7,6 @@ module.exports.newItem = wrapAsync(async (req, res) => {
   const filename = req.file.filename;
   const product = {
     ...req.body,
-    name: req.body.name.toLowerCase(),
-    category: req.body.category.toLowerCase(),
-    brand: req.body.brand.toLowerCase(),
     image: { url, filename },
   };
   const newItem = await Product.create(product);
@@ -46,9 +43,6 @@ module.exports.updateItemInformation = wrapAsync(async (req, res, next) => {
     item.image.filename=req.file.filename;
   }
   const updatedItem=Object.assign(item, req.body);
-  updatedItem.name=updatedItem.name.toLowerCase();
-  updatedItem.category=updatedItem.category.toLowerCase();
-  updatedItem.brand=updatedItem.brand.toLowerCase();
   item.save();
   res.json({ success: true, message: "updated successfull", updatedItem });
 });
@@ -67,4 +61,19 @@ module.exports.getDetail=wrapAsync(async(req,res)=>{
   const {id}=req.params;
   const product=await Product.findById(id);
   return res.json({success:true,product});
+})
+
+module.exports.filterProducts=wrapAsync(async(req,res)=>{
+  const {search}=req.query;
+  // console.log(req.query);
+  // we will use {search} because req.query has { search:query };
+  const searchProducts=await Product.find({
+  $or: [
+    { name: { $regex: search, $options: "i" } },
+    { category: { $regex: search, $options: "i" } },
+    { brand: { $regex: search, $options: "i" } },
+    { description: { $regex: search, $options: "i" } },
+  ],
+});
+  return res.json(searchProducts);
 })
