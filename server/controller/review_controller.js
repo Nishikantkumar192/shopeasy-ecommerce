@@ -11,3 +11,8 @@ module.exports.createReview=wrapAsync(async(req,res)=>{
     });
     return res.json({success:true,message:"Submitted succfully",newReview});
 });
+module.exports.getReviews=wrapAsync(async(req,res)=>{
+    const {id}=req.params;
+    const reviews=await Review.find({relatedProduct:id});
+    return res.json({success:true,reviews});
+})
