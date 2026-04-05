@@ -16,11 +16,10 @@ const CartItems = () => {
             toast.error(err.response?.data?.message || err.message);
         }
     }
-
   return (
     <div className="flex flex-wrap justify-center items-center gap-8 bg-gray-450 min-h-screen pt-[80px]">
-      {items?.map((item)=>{
-        return <ShowProduct item={item.relatedProduct} quantity={item.quantity} updatedAt={item.updatedAt} key={item._id}/>
+      {items?.map((product)=>{
+        return <ShowProduct item={product.relatedProduct} quantity={product.quantity} updatedAt={product.updatedAt} key={product._id}/>
       })}
     </div>
   )

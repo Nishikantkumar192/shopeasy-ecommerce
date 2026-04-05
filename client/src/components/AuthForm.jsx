@@ -44,9 +44,9 @@ const AuthForm = () => {
         }
     }
   return (
-    <div className="bg-[url(/images/backgroundImg.jpg)] bg-cover min-h-screen flex flex-col pt-[100px] items-center p-[2rem]">
-        <div className="form-inputs bg-white/10 backdrop-blur-md p-8 rounded-lg">
+    <div className="bg-[url(/images/backgroundImg.jpg)] bg-cover min-h-screen flex flex-col justify-center items-center p-[2rem]">
         <h1 className="text-4xl mb-4 font-bold text-white">{state}</h1>
+        <div className="bg-white/10 backdrop-blur-md p-8 max-w-[400px] w-full rounded-lg">
 
             <form onSubmit={handleSubmit}>
                 {state==="Sign-up" && <label className="font-bold" htmlFor="username">Username</label>}
@@ -64,13 +64,14 @@ const AuthForm = () => {
                 <div>
                     <FaLock/>
                     <input type={visibility===true?"password":"text"} id="password" name="password" placeholder="Enter your password" value={input.password} onChange={handleChange} required />
-                   {visibility===true?<span className="text-sm" onClick={show_hidePassword}>Show</span>:<span className="text-sm" onClick={show_hidePassword}>Hide</span>}
+                   {visibility===true?<span className="text-lg" onClick={show_hidePassword}>Show</span>:
+                   <span className="text-lg" onClick={show_hidePassword}>Hide</span>}
                 </div>
                 {state==="Log-in" && <Link className="text-black underline mb-[10px] block" to="/forget-password">forget password?</Link>}
                 <Button work={state}/>
             </form>
-            {state==="Sign-up"?<p>Already have an account? <span className="text-blue-900 underline cursor-pointer" onClick={()=>{setState("Log-in"),setInput(initialState)}}>log-in</span></p>:
-            <p>Create an account? <span className="text-blue-900 underline cursor-pointer text-white" onClick={()=>{setState("Sign-up"),setInput(initialState)}}>Sign-up</span></p>}
+            {state==="Sign-up"?<p>Already have an account? <span className="text-blue-900 text-xl underline cursor-pointer" onClick={()=>{setState("Log-in"),setInput(initialState)}}>log-in</span></p>:
+            <p>Create an account? <span className="text-blue-900 text-xl underline cursor-pointer text-white" onClick={()=>{setState("Sign-up"),setInput(initialState)}}>Sign-up</span></p>}
         </div>
     </div>
   )

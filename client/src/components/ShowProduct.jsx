@@ -12,7 +12,7 @@ const ShowProduct = ({item,quantity,updatedAt}) => {
   });
 };
   return (
-    <Link to={`/specificItem/${item._id}`}>
+    <Link to={`/specificItem/${item?._id}`}>
       <div className="bg-white rounded-lg w-80 shadow-2xl">
         <div className="flex justify-center items-center overflow-hidden">
           <img
@@ -22,14 +22,14 @@ const ShowProduct = ({item,quantity,updatedAt}) => {
           />
         </div>
         <div className="p-3">
-          {item.oldPrice<item.price && <span className="line-through text-xl">&#8377;{item?.oldPrice}</span>}{" "}
+          {item?.oldPrice>item?.price && <span className="line-through text-xl">&#8377;{item?.oldPrice}</span>}{" "}
           <span className="text-xl">&#8377;{item?.price}</span>
           <p className="text-2xl text-bold">{item?.name}</p>
-          {item?.discount>0 && <p className="text-green-400 text-bold text-xl">
+          {item?.oldPrice>item?.price && <p className="text-green-400 text-bold text-xl">
             Discount: {item?.discount}%
           </p>}
           <p
-            className={`text-xl ${item.isAvailable ? "text-green-600" : "text-red-500"}`}
+            className={`text-xl ${item?.isAvailable ? "text-green-600" : "text-red-500"}`}
           >
             {item?.isAvailable ? "In Stock ✅" : "Out of Stock ❌"}
           </p>

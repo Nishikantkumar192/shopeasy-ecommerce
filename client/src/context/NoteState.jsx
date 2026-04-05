@@ -100,14 +100,14 @@ const NoteState = (props) => {
   const deleteProduct = async (id) => {
     try {
       const { data } = await api.get(`/api/product/deleteItem/${id}`);
-      if (data.success === true) {
+      // if (data.success) {
         const updateChange = products.filter((product) => product._id !== id);
         setProducts(updateChange);
         navigate("/");
         toast.success(data.message);
-      }else{
-        toast.error(data.message);
-      }
+      // }else{
+      //   toast.error(data.message);
+      // }
     } catch (err) {
       toast.error(err.response?.data?.message || err.message);
     }
