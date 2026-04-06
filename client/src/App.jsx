@@ -10,6 +10,7 @@ import UpdateProductDetails from "./pages/UpdateProductDetails";
 import ParticularProductDetails from "./pages/ParticularProductDetails";
 import CartItems from "./pages/CartItems";
 import FilterProducts from "./pages/FilterProducts";
+import ForgetForm from "./pages/ForgetForm";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           />
           <Route exact path="/log-in" element={<AuthForm />} />
           <Route exact path="/sign-up" element={<AuthForm />} />
+          <Route exact path="/forget-password" element={<ForgetForm/>}/>
           <Route exact path="/specificItem/:id" element={<ParticularProductDetails/>}/>
           <Route exact path="/updateItemInformation/:id" element={<UpdateProductDetails/>}/>
           <Route exact path="/cart-items" element={<CartItems/>}/>

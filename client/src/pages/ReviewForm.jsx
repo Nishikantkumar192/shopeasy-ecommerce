@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import StarRating from "./StarRating";
 
 const ReviewForm = (props) => {
-  const { id } = props;
+  const { id,setDetails,details } = props;
   const initialState = {
     review: "",
     rating: 1,
@@ -24,8 +24,8 @@ const ReviewForm = (props) => {
   const createReview = async () => {
     try {
       const { data } = await api.post(`/api/review/createReview/${id}`, info);
+      setDetails(details.concat(data.newReview));
       toast.success(data.message);
-      {props.getReviews()}
     } catch (err) {
       toast.error(err.response?.data?.message || err.message);
     }

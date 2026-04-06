@@ -10,7 +10,7 @@ import DisplayReviews from "./DisplayReviews";
 
 const ParticularProductDetails = () => {
   const navigate = useNavigate();
-  const [details, setDetails] = useState([]);
+  const [details, setDetails] = useState([]);   //comment collection
   const { id } = useParams();
   const { specificItem, getSpecificDetail, deleteProduct } =
     useContext(NoteContext);
@@ -121,7 +121,7 @@ const ParticularProductDetails = () => {
       </div>
       <div className="bg-yellow-100">
         <h1 className="text-4xl text-red-800 pl-4">Leave Your Review</h1>
-        <ReviewForm id={specificItem._id} getReviews={getReviews}/>
+        <ReviewForm id={specificItem._id} setDetails={setDetails} details={details}/>
         <div className="flex w-full p-4 flex-wrap justify-center items-center">
           {details.map((comment) => {
             return (
@@ -129,7 +129,6 @@ const ParticularProductDetails = () => {
                 review={comment.review}
                 rating={comment.rating}
                 user={comment.relatedUser}
-                getReviews={getReviews}
                 id={comment._id}
                 key={comment._id}
               />

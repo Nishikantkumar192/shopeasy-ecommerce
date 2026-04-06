@@ -99,31 +99,23 @@ const NoteState = (props) => {
 
   const deleteProduct = async (id) => {
     try {
-      const { data } = await api.get(`/api/product/deleteItem/${id}`);
-      // if (data.success) {
+      const { data } = await api.delete(`/api/product/deleteItem/${id}`);
         const updateChange = products.filter((product) => product._id !== id);
         setProducts(updateChange);
         navigate("/");
         toast.success(data.message);
-      // }else{
-      //   toast.error(data.message);
-      // }
     } catch (err) {
       toast.error(err.response?.data?.message || err.message);
     }
   };
   const CallUpdateDetails = async (formData, id) => {
     try {
-      const { data } = await api.post(
+      const { data } = await api.put(
         `/api/product/updateItemInformation/${id}`,
         formData,
       );
-      if(data.success){
-        navigate("/");
-        toast.success(data.message);
-      }else{
-        toast.error(data.message);
-      }
+      navigate("/");
+      toast.success(data.message);
     } catch (err) {
       toast.error(err.response?.data?.message || err.message);
     }
