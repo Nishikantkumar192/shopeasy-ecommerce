@@ -1,4 +1,4 @@
-import { useContext, useEffect,useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import NoteContext from "../context/NoteContext";
 import { toast } from "react-toastify";
 import api from "../api/axios";
@@ -32,8 +32,7 @@ const ParticularProductDetails = () => {
   const getReviews = async () => {
     try {
       const { data } = await api.get(`/api/review/getReviews/${id}`);
-      console.log(data);
-      setDetails(data);
+      setDetails(data.reviews);
     } catch (err) {
       toast.error(err.response?.message?.data || err.message);
     }
@@ -51,7 +50,7 @@ const ParticularProductDetails = () => {
   return (
     // outer div
     <div>
-      <div className="flex justify-center items-center bg-gray-450 min-h-screen">
+      <div className="flex justify-center items-center bg-gray-450 min-h-[80vh]">
         {/* product Info div */}
         <div className="bg-white max-w-5xl w-full grid md:grid-cols-2 gap-8 p-6 rounded-lg shadow-2xl m-4">
           {/* image */}
@@ -120,12 +119,23 @@ const ParticularProductDetails = () => {
         </div>
         {/* Reviews */}
       </div>
-      <div>
+      <div className="bg-yellow-100">
         <h1 className="text-4xl text-red-800 pl-4">Leave Your Review</h1>
-        <ReviewForm id={specificItem._id} />
-        {details.map((comment)=>{
-          return <DisplayReviews review={comment.review} rating={comment.rating} key={comment._id}/>
-        })}
+        <ReviewForm id={specificItem._id} getReviews={getReviews}/>
+        <div className="flex w-full p-4 flex-wrap justify-center items-center">
+          {details.map((comment) => {
+            return (
+              <DisplayReviews
+                review={comment.review}
+                rating={comment.rating}
+                user={comment.relatedUser}
+                getReviews={getReviews}
+                id={comment._id}
+                key={comment._id}
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );
