@@ -1,5 +1,7 @@
 import { useState } from "react"
 import OtpSendForm from "./OtpSendForm"
+import {toast} from "react-toastify"
+import api from "../api/axios.js"
 
 const ForgetForm = () => {
     const initialState={
@@ -15,7 +17,16 @@ const ForgetForm = () => {
     }
     const handleSubmit=(e)=>{
         e.preventDefault();
-        
+        forgetPassword();
+        setDetail(initialState);
+    }
+    const forgetPassword=async()=>{
+        try{
+            const {data}=await api.post("/api/auth/forget-password",detail);
+            toast.success(data.message);
+        }catch(err){
+            toast.error(err.response?.data?.message || err.message);
+        }
     }
   return (
     <div className="min-h-screen flex flex-col bg-gray-900 justify-center items-center">

@@ -1,21 +1,40 @@
 const User=require("./models/user.js");
 const jwt=require("jsonwebtoken");
+const ExpressError=require("./utils/ExpressError.js");
 
 module.exports.isUserExist=(req,res,next)=>{
     const {token}=req.cookies;
     try{
         if(!token){
-            return res.json({success:false,message:"UnAuthorized User"});
+            return res.status(400).json({success:false,message:"UnAuthorized User"});
+            // return next(new ExpressError(400,"UnAuthorized User"));
         }
         const tokenDecode=jwt.verify(token,process.env.JWT_SECRET,);
         if(tokenDecode.id){
             req.user={id:tokenDecode.id};
         }else{
-            return res.json({success:false,message:"UnAuthorized User"});
+            return res.status(400).json({success:false,message:"UnAuthorized User"});
+            // return next(new ExpressError(400,"UnAuthorized User"));
         }
         next();
     }catch(err){
         return res.json({success:false,message:err.message});
+    }
+}
+module.exports.isEmailTokenExist=(req,res,next)=>{
+    const {emailToken}=req.cookies;
+    try{
+        if(!emailToken) return res.status(400).json({success:false,message:"OTP expired"});
+        const decodeEmailToken=jwt.verify(emailToken,process.env.JWT_SECRET);
+        console.log(decodeEmailToken);
+        if(decodeEmailToken.id){
+            req.user={id:decodeEmailToken.id};
+        }else{
+            return res.status(400).json({success:false,message:"Invalid User"});
+        }
+        next();
+    }catch(err){
+        return next(err);
     }
 }
 module.exports.isAdmin=async(req,res,next)=>{

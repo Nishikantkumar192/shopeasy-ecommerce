@@ -77,8 +77,52 @@ module.exports.logout = (req, res) => {
   return res.json({ success: true, message: "Logout successfully" });
 };
 
+module.exports.sendOtp=wrapAsync(async(req,res,next)=>{
+  const {email}=req.body;
+  const user=await User.findOne({email});
+  console.log(user);
+  if(!user) next(new ExpressError(404,"User not found"));
+  const emailToken=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"5m"});
+  res.cookie("emailToken",emailToken,{
+    httpOnly:true,
+    secure:false,
+    sameSite:"lax",
+    maxAge:5*60*1000
+  });
+  const otp=Math.floor(100000+Math.random()*900000);
+  user.resetOtp=otp;
+  console.log(user);
+  await user.save();
+  await transporter.sendMail({
+    from:process.env.SENDER_EMAIL,
+    to:email,
+    subject:"Secure Password Reset Code",
+    text:`For your security, use the following OTP to reset your password
+    :${otp} . This OTP is valid for 5 minutes and should not be shared with anyone.
+     If you did not initiate this request, please contact support immediately.`
+  })
+  res.json({success:true,message:"OTP send successfully"});
+});
+
+module.exports.forgetPassword=wrapAsync(async(req,res,next)=>{
+  const userId=req.user.id;       //id of user which has requested for forget password
+  const user=await User.findById(userId);
+  const {otp,password}=req.body;
+  if(user.resetOtp==="" || user.resetOtp!==otp) return next(new ExpressError(403,"Invalid OTP"));
+  const hashedPassword=await bcrypt.hash(password,10);
+  user.resetOtp="";
+  user.password=hashedPassword;
+  await user.save();
+  res.clearCookie("emailToken",{
+    httpOnly:true,
+    secure:false,
+    sameSite:"lax",
+  })
+  return res.json({success:true,message:"Password changed successfully"});
+})
+
 module.exports.verificationOtp = wrapAsync(async (req, res, next) => {
-  const userId = req.user.id;
+  const userId = req.user.emailToken_id;
   const user = await User.findById(userId);
   const otp = Math.floor(100000 + Math.random() * 900000);
   const emailSend = {
