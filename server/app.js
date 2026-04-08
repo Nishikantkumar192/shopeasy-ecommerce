@@ -22,7 +22,7 @@ async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/E-commercial');
 }
 
-const allowedOrigin=["http://localhost:5173"]
+const allowedOrigin=["http://localhost:5173","https://shopeasy-ecommerce-ubgf.vercel.app"]
 app.use(cors({origin:allowedOrigin,credentials:true}));
 app.use(express.json());
 app.use(cookieParser());
