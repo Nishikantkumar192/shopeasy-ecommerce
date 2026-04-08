@@ -130,6 +130,8 @@ const ParticularProductDetails = () => {
                 rating={comment.rating}
                 user={comment.relatedUser}
                 id={comment._id}
+                setDetails={setDetails}
+                details={details}
                 key={comment._id}
               />
             );

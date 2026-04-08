@@ -2,10 +2,12 @@ import { MdStarBorderPurple500 } from "react-icons/md";
 import { toast } from "react-toastify";
 import api from "../api/axios";
 
-const DisplayReviews = ({review,rating,user,id}) => {
+const DisplayReviews = ({review,rating,user,id,setDetails,details}) => {
   const DeleteReview=async()=>{
     try{
       const {data}=await api.delete(`/api/review/deleteReview/${id}`);
+      const filterReview=details.filter((detail)=>detail._id!==id);
+      setDetails(filterReview);
       toast.success(data.message);
     }catch(err){
       toast.error(err.response?.data?.message || err.message);
