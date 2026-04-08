@@ -17,10 +17,13 @@ const CartItems = () => {
         }
     }
   return (
-    <div className="flex flex-wrap justify-center items-center gap-8 bg-gray-450 min-h-screen pt-[80px]">
+    <div>
+    <div className="flex flex-wrap justify-center items-center gap-8 bg-gray-450 min-h-screen">
       {items?.map((product)=>{
         return <ShowProduct item={product.relatedProduct} quantity={product.quantity} updatedAt={product.updatedAt} key={product._id}/>
       })}
+    </div>
+
     </div>
   )
 }

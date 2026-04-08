@@ -13,7 +13,7 @@ const ShowProduct = ({item,quantity,updatedAt}) => {
 };
   return (
     <Link to={`/specificItem/${item?._id}`}>
-      <div className="bg-white rounded-lg w-80 shadow-2xl hover:opacity-75">
+      <div className="bg-white rounded-lg w-80 shadow-2xl hover:opacity-75 p-4">
         <div className="flex justify-center items-center overflow-hidden">
           <img
             src={item?.image?.url}

@@ -10,6 +10,7 @@ const Navbar = () => {
       <div>
           <Link className="ml-[10px] text-lg hover:text-white" to="/">Home</Link> 
           {isLoggedIn && <Link className="ml-[10px] hover:text-white" to="/addItem">AddItem</Link>}
+          <Link className="ml-[10px]" to={"/cart-items"}>Cart Items</Link>
       </div>
       <div>
         {!isLoggedIn?<Link className="ml-[10px] mr-[10px] hover:text-white" to="/log-in">Log-in</Link>

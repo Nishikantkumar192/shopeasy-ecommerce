@@ -28,7 +28,9 @@ const ParticularProductDetails = () => {
       toast.error(err.response?.data?.message || err.message);
     }
   };
-
+  const BuyNow=()=>{
+    addToCart();
+  }
   const getReviews = async () => {
     try {
       const { data } = await api.get(`/api/review/getReviews/${id}`);
