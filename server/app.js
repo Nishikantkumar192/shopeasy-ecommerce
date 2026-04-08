@@ -4,7 +4,7 @@ dotenv.config({path:path.resolve("./server/.env")});
 const express=require("express");
 const cors=require("cors");
 const mongoose=require("mongoose");
-const Port=8080;
+const Port=process.env.PORT || 8080;
 const app=express();
 const cookieParser=require("cookie-parser");
 const authRouter=require("./routes/auth_routes.js");
