@@ -173,8 +173,8 @@ module.exports.verifyOtp = wrapAsync(async (req, res, next) => {
   });
 });
 
-module.exports.isLoggedIn=async(req,res)=>{
+module.exports.isLoggedIn=wrapAsync(async(req,res)=>{
   const userId=req.user.id;
   const user=await User.findById(userId);
   return res.json({success:true,user});
-}
+})

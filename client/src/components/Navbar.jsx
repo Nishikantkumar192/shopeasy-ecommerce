@@ -14,7 +14,8 @@ const Navbar = () => {
       </div>
       <div>
         {!isLoggedIn?<Link className="ml-[10px] mr-[10px] hover:text-white" to="/log-in">Log-in</Link>
-        :<span className="mr-[10px] cursor-pointer" onClick={()=>LogoutUser()}>Logout</span>}
+        :<div className="rounded-full flex justify-center items-center cursor-pointer h-[30px] w-[30px] bg-white mr-8">{isLoggedIn.username[0]}</div> }
+        {/* // :<span className="mr-[10px] cursor-pointer" onClick={()=>LogoutUser()}>Logout</span>} */}
         </div>        
     </div>
   )

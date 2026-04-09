@@ -13,13 +13,14 @@ const cartRouter=require("./routes/cart_routes.js");
 const reviewRouter=require("./routes/review_routes.js");
 const ExpressError = require("./utils/ExpressError.js");
 
+const dbUrl=process.env.MONGODB_URL;
 main().then(()=>{
     console.log("connected successfully");
 }).catch((err)=>{
     console.log(err);
 })
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/E-commercial');
+    await mongoose.connect(dbUrl);
 }
 
 const allowedOrigin=["http://localhost:5173","https://shopeasy-ecommerce-ubgf.vercel.app"]
