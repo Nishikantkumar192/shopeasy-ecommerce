@@ -28,24 +28,60 @@ const ForgetForm = () => {
             toast.error(err.response?.data?.message || err.message);
         }
     }
-  return (
-    <div className="min-h-screen flex flex-col bg-gray-900 justify-center items-center">
-        <div className="w-full max-w-[350px] bg-yellow-400 p-4">
-            <OtpSendForm/>
-            <form className="mt-4" onSubmit={handleSubmit}>
-                <div className="flex flex-col mt-2">
-                    <label className="text-bold" htmlFor="otp">OTP</label>
-                    <input className="px-2 h-8 outline-none" type="text" name="otp" id="otp" placeholder="Enter valid OTP" value={detail.otp} onChange={handleChange} required/>
-                </div>
-                <div className="flex flex-col mt-2">
-                    <label className="text-bold" htmlFor="password">password</label>
-                    <input className="px-2 h-8 outline-none" type="password" name="password" id="password" placeholder="Enter new password" value={detail.password} onChange={handleChange} required/>
-                </div>
-                <button className="bg-green-600 rounded-md px-4 py-1 cursor-pointer mt-2">Submit</button>
-            </form>
+ return (
+  <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    
+    <div className="w-full max-w-sm bg-white/10 backdrop-blur-lg border border-gray-700 rounded-2xl shadow-xl p-6">
+      
+      <h2 className="text-2xl font-semibold text-white text-center mb-4">
+        Reset Password
+      </h2>
+
+      <OtpSendForm />
+
+      <form className="mt-4 space-y-4" onSubmit={handleSubmit}>
+        
+        <div className="flex flex-col">
+          <label className="text-gray-300 text-sm mb-1" htmlFor="otp">
+            OTP
+          </label>
+          <input
+            className="px-3 py-2 rounded-md bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            type="text"
+            name="otp"
+            id="otp"
+            placeholder="Enter OTP"
+            value={detail.otp}
+            onChange={handleChange}
+            required
+          />
         </div>
+
+        <div className="flex flex-col">
+          <label className="text-gray-300 text-sm mb-1" htmlFor="password">
+            New Password
+          </label>
+          <input
+            className="px-3 py-2 rounded-md bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Enter new password"
+            value={detail.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <button
+          className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-medium py-2 rounded-md transition duration-200"
+        >
+          Submit
+        </button>
+      </form>
     </div>
-  )
+  </div>
+);
 }
 
 export default ForgetForm

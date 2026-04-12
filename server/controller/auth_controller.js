@@ -80,7 +80,6 @@ module.exports.logout = (req, res) => {
 module.exports.sendOtp=wrapAsync(async(req,res,next)=>{
   const {email}=req.body;
   const user=await User.findOne({email});
-  console.log(user);
   if(!user) next(new ExpressError(404,"User not found"));
   const emailToken=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"5m"});
   res.cookie("emailToken",emailToken,{

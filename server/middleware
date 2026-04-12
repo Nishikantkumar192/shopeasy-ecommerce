@@ -26,7 +26,6 @@ module.exports.isEmailTokenExist=(req,res,next)=>{
     try{
         if(!emailToken) return res.status(400).json({success:false,message:"OTP expired"});
         const decodeEmailToken=jwt.verify(emailToken,process.env.JWT_SECRET);
-        console.log(decodeEmailToken);
         if(decodeEmailToken.id){
             req.user={id:decodeEmailToken.id};
         }else{
