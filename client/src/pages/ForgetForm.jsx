@@ -2,6 +2,7 @@ import { useState } from "react"
 import OtpSendForm from "./OtpSendForm"
 import {toast} from "react-toastify"
 import api from "../api/axios.js"
+import { Link } from "react-router-dom"
 
 const ForgetForm = () => {
     const initialState={
@@ -29,7 +30,7 @@ const ForgetForm = () => {
         }
     }
  return (
-  <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+  <div className="bg-[url(/images/backgroundImg.jpg)] bg-cover bg-center min-h-screen flex items-center justify-center">
     
     <div className="w-full max-w-sm bg-white/10 backdrop-blur-lg border border-gray-700 rounded-2xl shadow-xl p-6">
       
@@ -42,7 +43,7 @@ const ForgetForm = () => {
       <form className="mt-4 space-y-4" onSubmit={handleSubmit}>
         
         <div className="flex flex-col">
-          <label className="text-gray-300 text-sm mb-1" htmlFor="otp">
+          <label className="text-black text-sm mb-1" htmlFor="otp">
             OTP
           </label>
           <input
@@ -58,7 +59,7 @@ const ForgetForm = () => {
         </div>
 
         <div className="flex flex-col">
-          <label className="text-gray-300 text-sm mb-1" htmlFor="password">
+          <label className="text-black text-sm mb-1" htmlFor="password">
             New Password
           </label>
           <input
@@ -78,6 +79,7 @@ const ForgetForm = () => {
         >
           Submit
         </button>
+        <div><span className="text-lg px-2">Remember your password?</span><Link className="text-lg underline text-white" to={"/log-in"}>Log-in</Link></div>
       </form>
     </div>
   </div>

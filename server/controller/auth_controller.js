@@ -28,8 +28,8 @@ module.exports.register = wrapAsync(async (req, res, next) => {
   });
   res.cookie("token", token, {
     httpOnly: true,
-    secure: false,
-    sameSite: "lax",
+    secure: true,
+    sameSite: "none",
     maxAge: 14 * 24 * 60 * 60 * 1000,
   });
   const emailSend = {
@@ -61,8 +61,8 @@ module.exports.login = wrapAsync(async (req, res, next) => {
   });
   res.cookie("token", token, {
     httpOnly: true,
-    secure: false,
-    sameSite: "lax",
+    secure: true,
+    sameSite: "none",
     maxAge: 14 * 24 * 60 * 60 * 1000,
   });
   return res.json({ success: true, message: "Logged-in successfully" ,user});
@@ -71,8 +71,8 @@ module.exports.login = wrapAsync(async (req, res, next) => {
 module.exports.logout = (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
-    secure: false,
-    sameSite: "lax",
+    secure: true,
+    sameSite: "none",
   });
   return res.json({ success: true, message: "Logout successfully" });
 };
@@ -84,8 +84,8 @@ module.exports.sendOtp=wrapAsync(async(req,res,next)=>{
   const emailToken=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"5m"});
   res.cookie("emailToken",emailToken,{
     httpOnly:true,
-    secure:false,
-    sameSite:"lax",
+    secure:true,
+    sameSite:"none",
     maxAge:5*60*1000
   });
   const otp=Math.floor(100000+Math.random()*900000);
@@ -114,8 +114,8 @@ module.exports.forgetPassword=wrapAsync(async(req,res,next)=>{
   await user.save();
   res.clearCookie("emailToken",{
     httpOnly:true,
-    secure:false,
-    sameSite:"lax",
+    secure:true,
+    sameSite:"none",
   })
   return res.json({success:true,message:"Password changed successfully"});
 })

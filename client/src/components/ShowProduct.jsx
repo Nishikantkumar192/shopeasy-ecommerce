@@ -14,16 +14,7 @@ const ShowProduct = ({item,quantity,updatedAt}) => {
     hour: "2-digit",
     minute: "2-digit"
   });
-  const cartRemove=async()=>{
-    console.log("button clicked");
-    try{
-      const {data}=await api.get(`/api/cart/cartRemove/${item?._id}`);
-      navigate("/cart-items");
-      toast.success(data.message);
-    }catch(err){
-      toast.error(err.response?.data?.message || err.message);
-    }
-  }
+
 };
   return (
     <Link to={`/specificItem/${item?._id}`}>

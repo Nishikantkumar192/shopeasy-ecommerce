@@ -44,7 +44,7 @@ const AuthForm = () => {
         }
     }
 return (
-  <div className="bg-[url(/images/auth-background.jpg)] bg-cover bg-center min-h-screen flex items-center justify-center px-4">
+  <div className="bg-[url(/images/backgroundImg.jpg)] bg-cover bg-center min-h-screen flex items-center justify-center px-4">
 
     <div className="w-full max-w-md bg-white/10 backdrop-blur-2xl border border-white/20 rounded-2xl shadow-2xl p-8 text-white">
 
@@ -110,7 +110,7 @@ return (
 
             <span
               onClick={show_hidePassword}
-              className="text-xs text-purple-300 cursor-pointer hover:text-purple-500 transition"
+              className="text-md text-black cursor-pointer hover:text-purple-500 transition"
             >
               {visibility ? "Show" : "Hide"}
             </span>
@@ -121,7 +121,7 @@ return (
         {state === "Log-in" && (
           <Link
             to="/forget-password"
-            className="text-xs text-right block text-purple-300 hover:underline"
+            className="text-md text-right block text-purple-300 hover:underline"
           >
             Forgot password?
           </Link>
@@ -134,7 +134,7 @@ return (
       </form>
 
       {/* Toggle */}
-      <p className="text-center text-sm mt-6 text-gray-300">
+      <p className="text-center text-lg mt-6 text-gray-300">
         {state === "Sign-up" ? (
           <>
             Already have an account?{" "}
@@ -143,7 +143,7 @@ return (
                 setState("Log-in");
                 setInput(initialState);
               }}
-              className="text-purple-400 font-semibold cursor-pointer hover:underline"
+              className="text-purple-400 font-semibold cursor-pointer hover:underline "
             >
               Log-in
             </span>
