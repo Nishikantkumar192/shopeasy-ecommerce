@@ -131,20 +131,6 @@ const Newdetails = (props) => {
               required
             />
           </div>
-                    <div>
-            <label className="font-bold" htmlFor="discount">
-              Discount
-            </label>
-            <input
-              type="number"
-              placeholder="Enter the percentage of Discount"
-              id="discount"
-              name="discount"
-              min="0"
-              value={details.discount}
-              onChange={handleChange}
-            />
-          </div>
           <div>
             <label className="font-bold" htmlFor="image">
               Product-Image

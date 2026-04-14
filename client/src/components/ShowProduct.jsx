@@ -1,10 +1,6 @@
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import api from "../api/axios";
-import { useNavigate } from "react-router-dom";
 
 const ShowProduct = ({item,quantity,updatedAt}) => {
-  const navigate=useNavigate();
     const formatDate = (date) => {
   return new Date(date).toLocaleString("en-IN", {
     timeZone: "Asia/Kolkata",
@@ -31,7 +27,7 @@ const ShowProduct = ({item,quantity,updatedAt}) => {
           <span className="text-xl">&#8377;{item?.price}</span>
           <p className="text-2xl text-bold">{item?.name}</p>
           {item?.oldPrice>item?.price && <p className="text-green-400 text-bold text-xl">
-            Discount: {item?.discount}%
+            Discount: {Math.floor((item.oldPrice-item.price)/item.oldPrice*100)}%
           </p>}
           <p
             className={`text-xl ${item?.isAvailable ? "text-green-600" : "text-red-500"}`}

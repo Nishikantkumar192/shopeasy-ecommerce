@@ -90,7 +90,6 @@ module.exports.sendOtp=wrapAsync(async(req,res,next)=>{
   });
   const otp=Math.floor(100000+Math.random()*900000);
   user.resetOtp=otp;
-  console.log(user);
   await user.save();
   await transporter.sendMail({
     from:process.env.SENDER_EMAIL,

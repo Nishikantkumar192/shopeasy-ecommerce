@@ -52,7 +52,7 @@ const ParticularProductDetails = () => {
   return (
     // outer div
     <div>
-      <div className="flex justify-center items-center bg-gray-450 min-h-[80vh]">
+      <div className="flex justify-center items-center bg-gray-450 min-h-screen pt-4">
         {/* product Info div */}
         <div className="bg-white max-w-5xl w-full grid md:grid-cols-2 gap-8 p-6 rounded-lg shadow-2xl m-4">
           {/* image */}
@@ -85,7 +85,7 @@ const ParticularProductDetails = () => {
               </span>
               {specificItem?.oldPrice > specificItem.price && (
                 <p className="text-green-400">
-                  Discount: {specificItem?.discount}%
+                  Discount: {Math.floor((specificItem.oldPrice-specificItem.price)/specificItem.oldPrice*100)}%
                 </p>
               )}
             </div>

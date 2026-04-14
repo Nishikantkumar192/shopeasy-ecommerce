@@ -1,10 +1,18 @@
 import {Link} from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import NoteContext from "../context/NoteContext";
 
 const Navbar = () => {
   const context=useContext(NoteContext);
   const {LogoutUser,isLoggedIn}=context;
+  const [isOpen,setIsOpen]=useState(false);
+  // const handleDropdown=()=>{
+  //   if(isOpen==true){
+  //     setIsOpen(false);
+  //   }else{
+  //     setIsOpen(true);
+  //   }
+  // }
   return (
     <div className="bg-black text-gray-400 fixed top-0 w-full h-[50px] flex justify-between items-center z-1">
       <div>
