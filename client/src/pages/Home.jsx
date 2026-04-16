@@ -5,6 +5,13 @@ import SearchBar from "../components/SearchBar";
 const Home = () => {
   const context=useContext(NoteContext);
   const {getProducts,products}=context;
+  if(!products){
+    <div className="flex flex-col justify-center items-center">
+      <div>
+        <h1 className="text-2xl">Loading....</h1>
+      </div>
+    </div>
+  }
   useEffect(()=>{
     getProducts();
   },[])

@@ -67,11 +67,7 @@ const NoteState = (props) => {
     navigate("/");
     try {
       const { data } = await api.get("/api/auth/logout");
-      if (data.success) {
         toast.success(data.message);
-      } else {
-        toast.error(data.message);
-      }
     } catch (err) {
       toast.error(err.response?.data?.message || err.message);
     }
