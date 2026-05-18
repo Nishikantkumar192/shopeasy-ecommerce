@@ -9,7 +9,9 @@ const cartSchema=new mongoose.Schema({
     relatedProduct:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"product",
-        required:true,
+    },
+    guestId:{
+        type:String,
     },
     quantity:{
         type:Number,
