@@ -38,11 +38,19 @@ function App() {
           />
           <Route exact path="/log-in" element={<AuthForm />} />
           <Route exact path="/sign-up" element={<AuthForm />} />
-          <Route exact path="/forget-password" element={<ForgetForm/>}/>
-          <Route exact path="/specificItem/:id" element={<ParticularProductDetails/>}/>
-          <Route exact path="/updateItemInformation/:id" element={<UpdateProductDetails/>}/>
-          <Route exact path="/cart-items" element={<CartItems/>}/>
-          <Route exact path="/filter-products" element={<FilterProducts/>}/>
+          <Route exact path="/forget-password" element={<ForgetForm />} />
+          <Route
+            exact
+            path="/specificItem/:id"
+            element={<ParticularProductDetails />}
+          />
+          <Route
+            exact
+            path="/updateItemInformation/:id"
+            element={<UpdateProductDetails />}
+          />
+          <Route exact path="/cart-items" element={<CartItems />} />
+          <Route exact path="/filter-products" element={<FilterProducts />} />
         </Routes>
       </NoteState>
     </Router>

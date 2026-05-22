@@ -8,7 +8,7 @@ const Home = () => {
   if(!products){
     <div className="flex flex-col justify-center items-center">
       <div>
-        <h1 className="text-2xl">Loading....</h1>
+        <h1 className="text-2xl mt-12">Loading....</h1>
       </div>
     </div>
   }

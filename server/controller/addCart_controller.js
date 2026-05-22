@@ -34,11 +34,16 @@ module.exports.addToCart = wrapAsync(async (req, res) => {
   return res.json({ success: true, message: "Successfully Added" });
 });
 module.exports.getCartItems = wrapAsync(async (req, res) => {
-  const userId = req.user.id;
-  const products = await Cart.find({ relatedUser: userId }).populate(
-    "relatedProduct",
-  );
-  return res.json(products);
+  const { userId, role } = req.user;
+  if (role === "user") {
+    const products = await Cart.find({ relatedUser: userId }).populate(
+      "relatedProduct",
+    );
+    return res.json(products);
+  } else {
+    const guestCartProducts = await Cart.find({ guestId: userId });
+    return res.json(guestCartProducts);
+  }
 });
 module.exports.cartRemove = wrapAsync(async (req, res, next) => {
   const userId = req.user.id;

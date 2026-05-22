@@ -15,7 +15,6 @@ module.exports.isUserExist=(req,res,next)=>{
         }
         if(guestToken){
             const decode=jwt.verify(guestToken,process.env.JWT_SECRET);
-            console.log("decoded id-->> "+decode.id);
             req.user={id:decode.id,role:"guest"};
             return next();
         }

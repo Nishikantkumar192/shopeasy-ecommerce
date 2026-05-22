@@ -44,7 +44,7 @@ module.exports.updateItemInformation = wrapAsync(async (req, res, next) => {
   }
   const updatedItem=Object.assign(item, req.body);
   item.save();
-  res.json({ success: true, message: "updated successfull", updatedItem });
+  return res.json({ success: true, message: "updated successfull", updatedItem });
 });
 
 module.exports.deleteItem = wrapAsync(async (req, res, next) => {

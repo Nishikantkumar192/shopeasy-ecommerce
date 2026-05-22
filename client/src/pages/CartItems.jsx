@@ -23,13 +23,18 @@ const CartItems = () => {
       </div>
     );
   }
+  const totalAmount = items?.reduce(
+  (total, item) => total + item.price * item.quantity,
+  0
+);
   return (
     <div>
     <div className="flex flex-wrap justify-center items-center gap-8 bg-gray-450 min-h-screen">
       {items.map((product)=>{
-        return <ShowProduct item={product.relatedProduct} quantity={product.quantity} updatedAt={product.updatedAt} key={product._id}/>
+        return <ShowProduct item={product.relatedProduct?product.relatedProduct:product.guestId}  quantity={product.quantity} updatedAt={product.updatedAt} key={product._id}/>
       })}
     </div>
+    <p className="text-5xl">Total amount:{totalAmount}</p>
     </div>
   )
 }
