@@ -17,9 +17,8 @@ const NoteState = (props) => {
 
   const isValid = async () => {
     try {
-      const { data } = await api.get("/api/auth/isLoggedIn");
+      const {data}  = await api.get("/api/auth/isLoggedIn");
         setIsLoggedIn(data.user);
-        toast.error(data.message);
     } catch (err) {
       toast.error(err.response?.data?.message || err.message);
     }

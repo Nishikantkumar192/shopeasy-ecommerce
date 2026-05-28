@@ -10,24 +10,27 @@ module.exports.isUserExist=(req,res,next)=>{
             if(!decodeToken.id){
                 return res.status(400).json({success:false,message:"UnAuthorized token"});
             }
-            req.user={id:decodeToken.id,role:"user"};
+            req.user={id:decodeToken.id};
             return next();
         }
-        if(guestToken){
-            const decode=jwt.verify(guestToken,process.env.JWT_SECRET);
-            req.user={id:decode.id,role:"guest"};
-            return next();
+        // if(guestToken){
+        //     const decode=jwt.verify(guestToken,process.env.JWT_SECRET);
+        //     req.user={id:decode.id,role:"guest"};
+        //     return next();
+        // }
+        else{
+            return res.status(400).json({success:false,message:"user doesn't exist"});
         }
-        const newGuestToken=jwt.sign({id:uuidv4()},process.env.JWT_SECRET,{expiresIn:"14d"});
-        res.cookie("guestToken",newGuestToken,{
-            httpOnly:true,
-            secure:true,
-            sameSite:"none",
-            maxAge:14*24*60*60*1000,
-        })
-        const decodeGuestToken=jwt.verify(guestToken,process.env.JWT_SECRET);
-        req.user={id:decodeGuestToken.id,role:"guest"};
-        return next();
+        // const newGuestToken=jwt.sign({id:uuidv4()},process.env.JWT_SECRET,{expiresIn:"14d"});
+        // res.cookie("guestToken",newGuestToken,{
+        //     httpOnly:true,
+        //     secure:true,
+        //     sameSite:"none",
+        //     maxAge:14*24*60*60*1000,
+        // })
+        // const decodeGuestToken=jwt.verify(guestToken,process.env.JWT_SECRET);
+        // req.user={id:decodeGuestToken.id,role:"guest"};
+        // return next();
     }catch(err){
         return res.json({success:false,message:err.message});
     }

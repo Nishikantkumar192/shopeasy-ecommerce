@@ -18,7 +18,7 @@ const Home = () => {
   return (
     <>
     <SearchBar/>
-    <div className="flex flex-wrap justify-center gap-8 overflow-y-auto p-8 bg-gray-450 h-screen">
+    <div className="flex flex-wrap justify-center gap-8 overflow-y-auto p-8 bg-gray-450 ">
       {products.map((item)=>{
         return <DisplayProduct item={item} key={item._id}/>
       })}
