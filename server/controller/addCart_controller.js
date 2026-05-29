@@ -49,6 +49,12 @@ module.exports.getCartItems = wrapAsync(async (req, res) => {
 module.exports.cartRemove = wrapAsync(async (req, res, next) => {
   const userId = req.user.id;
   const id = req.params;
+    const getItem = await Cart.findOne({
+    relatedProduct: new mongoose.Types.ObjectId(id),
+    relatedUser: new mongoose.Types.ObjectId(userId),
+  });
+  console.log(getItem); 
+  if(getItem.relatedUser!=userId) return next(new ExpressError(403,"Permission Denied"));
 
   const removedCartItem = await Cart.findOneAndDelete({
     relatedProduct: new mongoose.Types.ObjectId(id),

@@ -4,7 +4,7 @@ const PriceDetails = (props) => {
   return (
     <div className="m-4 bg-gray-200 max-w-[500px] flex flex-col text-2xl p-5 ">
       <div className="flex justify-between mt-2 mb-2">
-        <span className="underline">MRP (includes all taxes)</span>
+        <span className="underline mr-4">MRP (includes all taxes)</span>
         <span className="text-green-700">&#8377;{props.totalAmount}</span>
       </div>
       <select className="mt-2">
@@ -14,12 +14,7 @@ const PriceDetails = (props) => {
           Delivary charge - &#8377;{props.delivaryCharge}
         </option>
       </select>
-      <select className="mt-2">
-        <option value="">Discounts  -  &#8377;{props.totalOldPrice - props.totalAmount}</option>
-        <option disabled value="">
-          Discount on MRP - &#8377;{props.totalOldPrice-props.totalAmount}
-        </option>
-      </select>
+
     </div>
   );
 };

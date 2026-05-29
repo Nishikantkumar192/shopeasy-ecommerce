@@ -24,6 +24,11 @@ const CartItems = () => {
       </div>
     );
   }
+  const products=items.map((item)=>({
+    productId:item._id,
+    quantity:item.quantity,
+  }));
+  console.log(products);
   const totalOldPrice = items.reduce(
     (total, item) => total + (item.relatedProduct?.oldPrice || 0) * item.quantity,
     0,
@@ -34,7 +39,7 @@ const CartItems = () => {
   );
   return (
     <div>
-      <div className="flex flex-wrap justify-center items-center gap-8 bg-gray-450 mt-20">
+      <div className="flex flex-wrap justify-center items-center gap-8 bg-gray-450 min-h-screen">
         {items.map((product) => {
           return (
             <ShowProduct
@@ -45,10 +50,10 @@ const CartItems = () => {
             />
           );
         })}
+      {items.length!=0 && <PriceDetails totalAmount={totalAmount} platFormCharge={11} delivaryCharge={50} totalOldPrice={totalOldPrice}/>}
       </div>
-      <PriceDetails totalAmount={totalAmount} platFormCharge={11} delivaryCharge={50} totalOldPrice={totalOldPrice}/>
       {totalAmount != 0 && (
-        <Payment totalAmount={totalAmount} totalOldPrice={totalOldPrice}/>
+        <Payment totalAmount={totalAmount} totalOldPrice={totalOldPrice} products={products}/>
       )}
     </div>
   );

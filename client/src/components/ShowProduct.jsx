@@ -16,15 +16,11 @@ const ShowProduct = ({ item, quantity, updatedAt }) => {
       try{
         const { data } = api.delete(`/api/cart/cartRemove/${item?._id}`);
         toast.success(data.message);
+        
       }catch(err){
         toast.error(err.response?.data?.message || err.message);
       }
     };
-    remove -
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        cartRemove();
-      });
   };
   return (
     <Link to={`/specificItem/${item?._id}`}>
@@ -62,12 +58,12 @@ const ShowProduct = ({ item, quantity, updatedAt }) => {
           {updatedAt && <span>UpdatedAt: {formatDate(updatedAt)}</span>}
         </div>
         {quantity && (
-          <div
-            id="remove-btn"
+          <button
+            onClick={(e)=>{e.stopPropagation,console.log("clicked"),cartRemove()}}
             className="bg-black text-white px-4 py-2 text-center rounded-md cursor-pointer"
           >
             Remove
-          </div>
+          </button>
         )}
       </div>
     </Link>
