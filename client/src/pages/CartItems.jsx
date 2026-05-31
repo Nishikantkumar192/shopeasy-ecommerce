@@ -28,7 +28,6 @@ const CartItems = () => {
     productId:item._id,
     quantity:item.quantity,
   }));
-  console.log(products);
   const totalOldPrice = items.reduce(
     (total, item) => total + (item.relatedProduct?.oldPrice || 0) * item.quantity,
     0,
@@ -39,7 +38,7 @@ const CartItems = () => {
   );
   return (
     <div>
-      <div className="flex flex-wrap justify-center items-center gap-8 bg-gray-450 min-h-screen">
+      <div className="flex flex-wrap justify-center items-center mt-16 gap-8 bg-gray-450 min-h-screen">
         {items.map((product) => {
           return (
             <ShowProduct

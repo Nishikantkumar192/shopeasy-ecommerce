@@ -28,6 +28,7 @@ const NoteState = (props) => {
     try {
       const { data } = await api.post("/api/product/newItem", formData);
       toast.success(data.message);
+      setProducts((prev)=>prev.concat(data.newItem));
     } catch (err) {
       toast.error(err.response?.data?.message || err.message);
     }

@@ -41,8 +41,8 @@ const Navbar = () => {
         {user && (
           <div className="absolute top-12 right-4 bg-gray-300 p-4 ml-2 rounded-sm shadow-2xl">
             <p className="text-xl text-black">{isLoggedIn?.username}</p>
-            <p className="text-lg text-black">{isLoggedIn?.email}</p>
-            <span
+            {isLoggedIn?.username!="Guest" && <p className="text-lg text-black">{isLoggedIn?.email}</p>}
+            {isLoggedIn?.username!="Guest" && <span
               className="mr-[10px] cursor-pointer text-xl text-black"
               onClick={() => {
                 LogoutUser();
@@ -50,7 +50,7 @@ const Navbar = () => {
               }}
             >
               Logout
-            </span>
+            </span>}
           </div>
         )}
       </div>

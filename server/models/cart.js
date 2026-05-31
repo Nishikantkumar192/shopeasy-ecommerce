@@ -12,6 +12,7 @@ const cartSchema=new mongoose.Schema({
     },
     guestId:{
         type:String,
+        required:true,
     },
     quantity:{
         type:Number,

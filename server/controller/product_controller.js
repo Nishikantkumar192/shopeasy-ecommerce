@@ -11,7 +11,7 @@ module.exports.newItem = wrapAsync(async (req, res) => {
   };
   const newItem = await Product.create(product);
   await newItem.save();
-  return res.json({ success: true, message: "product added successfully" });
+  return res.json({ success: true, message: "product added successfully",newItem });
 });
 
 module.exports.getProducts = wrapAsync(async (req, res, next) => {
