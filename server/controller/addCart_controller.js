@@ -10,13 +10,13 @@ module.exports.addToCart = wrapAsync(async (req, res) => {
   let existingItem = null;
   if (loginUser === "user") {
     existingItem = await Cart.findOne({
-      relatedUser: userId,
-      relatedProduct: id,
+      relatedUser: new mongoose.Types.ObjectId(userId),
+      relatedProduct: new mongoose.Types.ObjectId(id),
     });
   } else {
     existingItem = await Cart.findOne({
       guestId: userId,
-      relatedProduct: id,
+      relatedProduct: new mongoose.Types.ObjectId(id),
     });
   }
   if (existingItem) {
@@ -24,30 +24,33 @@ module.exports.addToCart = wrapAsync(async (req, res) => {
     await existingItem.save();
   } else if (loginUser === "user") {
     await Cart.create({
-      relatedUser: userId,
+      relatedUser: new mongoose.Types.ObjectId(userId),
       guestId: generalId,
-      relatedProduct: id,
+      relatedProduct: new mongoose.Types.ObjectId(id),
     });
   } else {
     await Cart.create({
       relatedUser: generalId,
       guestId: userId,
-      relatedProduct: id,
+      relatedProduct: new mongoose.Types.ObjectId(id),
     });
   }
   return res.json({ success: true, message: "Successfully Added" });
 });
 module.exports.getCartItems = wrapAsync(async (req, res) => {
   const { userId, loginUser } = req.user;
-  const user = await User.findById(userId);
-  if (loginUser === "user" && user && user.role === "admin") {
-    const AdminPortalCartInfo = await Cart.find().populate("relatedProduct");
-    return res.json(AdminPortalCartInfo);
+  if (loginUser === "user") {
+    const user = await User.findById(userId);
+    if (user && user.role === "admin") {
+      const AdminPortalCartInfo =
+        await Cart.find().populate("relatedProduct");
+      return res.json(AdminPortalCartInfo);
+    }
   }
   if (loginUser === "user") {
-    const products = await Cart.find({ relatedUser: userId }).populate(
-      "relatedProduct",
-    );
+    const products = await Cart.find({
+      relatedUser: new mongoose.Types.ObjectId(userId),
+    }).populate("relatedProduct");
     return res.json(products);
   } else {
     const guestCartProducts = await Cart.find({ guestId: userId }).populate(

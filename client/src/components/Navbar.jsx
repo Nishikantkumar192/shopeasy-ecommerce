@@ -16,7 +16,7 @@ const Navbar = () => {
         <Link className="ml-[10px] text-lg hover:text-white" to="/" >
           Home
         </Link>
-        {isLoggedIn && (
+        {isLoggedIn && isLoggedIn?.role==="admin" && (
           <Link className="ml-[10px] hover:text-white" to="/addItem">
             AddItem
           </Link>
