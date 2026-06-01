@@ -5,5 +5,5 @@ const router=express.Router();
 
 router.get("/addToCart/:id",isUserExist,addToCart);
 router.get("/cart-items",isUserExist,getCartItems);
-router.get("/cartRemove/:id",isUserExist,cartRemove);
+router.delete("/cartRemove/:id",isUserExist,cartRemove);
 module.exports=router;

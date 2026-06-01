@@ -26,7 +26,7 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="relative">
-        {!isLoggedIn ? (
+        {!isLoggedIn || isLoggedIn.username==="Guest" ? (
           <Link className="ml-[10px] mr-[10px] hover:text-white" to="/log-in">
             Log-in
           </Link>

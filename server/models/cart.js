@@ -17,7 +17,15 @@ const cartSchema=new mongoose.Schema({
     quantity:{
         type:Number,
         default:1,
+    },
+    expireAt:{
+        type:Date,
+        default:null,
     }
 },{timestamps:true});
+cartSchema.index(
+    {expireAt:1},
+    {expireAfterSeconds:0}
+)
 const cart=mongoose.model("cart",cartSchema);
 module.exports=cart;

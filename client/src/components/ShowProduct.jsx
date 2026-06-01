@@ -12,16 +12,15 @@ const ShowProduct = ({ item, quantity, updatedAt }) => {
       hour: "2-digit",
       minute: "2-digit",
     });
-    const cartRemove = () => {
+  };
+    const cartRemove = async() => {
       try{
-        const { data } = api.delete(`/api/cart/cartRemove/${item?._id}`);
+        const { data } =await api.delete(`/api/cart/cartRemove/${item?._id}`);
         toast.success(data.message);
-        
       }catch(err){
         toast.error(err.response?.data?.message || err.message);
       }
     };
-  };
   return (
     <Link to={`/specificItem/${item?._id}`}>
       <div className="bg-white rounded-lg w-80 shadow-2xl hover:opacity-90 p-4">
@@ -59,7 +58,7 @@ const ShowProduct = ({ item, quantity, updatedAt }) => {
         </div>
         {quantity && (
           <button
-            onClick={(e)=>{e.stopPropagation,console.log("clicked"),cartRemove()}}
+            onClick={(e)=>{e.preventDefault(),e.stopPropagation(),cartRemove()}}
             className="bg-black text-white px-4 py-2 text-center rounded-md cursor-pointer"
           >
             Remove

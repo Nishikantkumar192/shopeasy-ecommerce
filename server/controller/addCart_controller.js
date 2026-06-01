@@ -2,17 +2,18 @@ const { default: mongoose } = require("mongoose");
 const Cart = require("../models/cart.js");
 const { wrapAsync } = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
+const User = require("../models/user.js");
 module.exports.addToCart = wrapAsync(async (req, res) => {
-  const  {userId,loginUser} = req.user;
-  const { id } = req.params;  
-  const generalId="69d73ec612513e8ba5bd5bed";
+  const { userId, loginUser } = req.user;
+  const { id } = req.params;
+  const generalId = "69d73ec612513e8ba5bd5bed";
   let existingItem = null;
   if (loginUser === "user") {
-      existingItem = await Cart.findOne({
+    existingItem = await Cart.findOne({
       relatedUser: userId,
       relatedProduct: id,
     });
-  }else {
+  } else {
     existingItem = await Cart.findOne({
       guestId: userId,
       relatedProduct: id,
@@ -21,15 +22,15 @@ module.exports.addToCart = wrapAsync(async (req, res) => {
   if (existingItem) {
     existingItem.quantity += 1;
     await existingItem.save();
-  } else if(loginUser==="user"){
+  } else if (loginUser === "user") {
     await Cart.create({
       relatedUser: userId,
-      guestId:generalId,
+      guestId: generalId,
       relatedProduct: id,
     });
-  }else {
+  } else {
     await Cart.create({
-      relatedUser:generalId,
+      relatedUser: generalId,
       guestId: userId,
       relatedProduct: id,
     });
@@ -37,40 +38,66 @@ module.exports.addToCart = wrapAsync(async (req, res) => {
   return res.json({ success: true, message: "Successfully Added" });
 });
 module.exports.getCartItems = wrapAsync(async (req, res) => {
-  const {userId,loginUser}= req.user;
+  const { userId, loginUser } = req.user;
+  const user = await User.findById(userId);
+  if (loginUser === "user" && user && user.role === "admin") {
+    const AdminPortalCartInfo = await Cart.find().populate("relatedProduct");
+    return res.json(AdminPortalCartInfo);
+  }
   if (loginUser === "user") {
     const products = await Cart.find({ relatedUser: userId }).populate(
       "relatedProduct",
     );
     return res.json(products);
   } else {
-      const guestCartProducts = await Cart.find({ guestId: userId }).populate("relatedProduct");
+    const guestCartProducts = await Cart.find({ guestId: userId }).populate(
+      "relatedProduct",
+    );
     return res.json(guestCartProducts);
   }
 });
 module.exports.cartRemove = wrapAsync(async (req, res, next) => {
-  const {userId,loginUser} = req.user;
-  const {id} = req.params;
-  let getItem=null;
-  if(loginUser==="user"){
+  const { userId, loginUser } = req.user;
+  const { id } = req.params;
+  let getItem = null;
+  if (loginUser === "user") {
     getItem = await Cart.findOne({
-    relatedProduct: new mongoose.Types.ObjectId(id),
-    relatedUser: new mongoose.Types.ObjectId(userId),
-  });
-}else{
-  
-}
-  console.log(getItem); 
-  if(getItem.relatedUser!=userId) return next(new ExpressError(403,"Permission Denied"));
-
-  const removedCartItem = await Cart.findOneAndDelete({
-    relatedProduct: new mongoose.Types.ObjectId(id),
-    relatedUser: new mongoose.Types.ObjectId(userId),
-  });
-  if (!removedCartItem) return next(new ExpressError(400, "Item not found"));
-  return res.json({
-    success: true,
-    message: "successfully Removed",
-    removedCartItem,
-  });
+      relatedUser: new mongoose.Types.ObjectId(userId),
+      relatedProduct: new mongoose.Types.ObjectId(id),
+    });
+  } else {
+    getItem = await Cart.findOne({
+      guestId: userId,
+      relatedProduct: new mongoose.Types.ObjectId(id),
+    });
+  }
+  if (!getItem) return next(new ExpressError(403, "UnAvailable product"));
+  if (
+    loginUser === "user" &&
+    getItem.relatedUser != new mongoose.Types.ObjectId(userId)
+  )
+    return next(new ExpressError(403, "Permission Denied"));
+  else if (getItem.guestId != userId)
+    return next(new ExpressError(403, "Permission Denied"));
+  if (loginUser === "user") {
+    const removedUserCartItem = await Cart.findOneAndDelete({
+      relatedProduct: new mongoose.Types.ObjectId(id),
+      relatedUser: new mongoose.Types.ObjectId(userId),
+    });
+    return res.json({
+      success: true,
+      message: "successfully Removed",
+      removedUserCartItem,
+    });
+  } else {
+    const removedGuestCartItem = await Cart.findOneAndDelete({
+      guestId: userId,
+      relatedProduct: new mongoose.Types.ObjectId(id),
+    });
+    return res.json({
+      success: true,
+      message: "successfully Removed",
+      removedGuestCartItem,
+    });
+  }
 });
