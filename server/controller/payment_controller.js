@@ -11,7 +11,10 @@ const razorpay = new Razorpay({
 
 module.exports.orderCreation = wrapAsync(async (req, res, next) => {
   const { amount,products} = req.body;
-  const userId=req.user.id;
+  console.log(amount);
+  console.log(products);
+  const {userId,role}=req.user;
+  if(role==="Guest") return next(new ExpressError(403,"Log_in yourself"));
   const options = {
     amount: amount * 100,
     currency: "INR",
@@ -19,7 +22,7 @@ module.exports.orderCreation = wrapAsync(async (req, res, next) => {
   };
     const razorpayOrder = await razorpay.orders.create(options);
     const order=await Order.create({
-      amount:razorpayOrder.amount/100,
+      amount:razorpayOrder.amount,
       relatedUser:userId,
       products:products,
       orderId:razorpayOrder.id,
@@ -33,7 +36,8 @@ module.exports.orderCreation = wrapAsync(async (req, res, next) => {
 
 module.exports.verifyPayment = wrapAsync(async (req, res, next) => {
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
-  const userId=req.user.id;
+  const {userId,role}=req.user;
+  if(role==="Guest") return next(new ExpressError(403,"Permission Denied"));
   if(!razorpay_order_id && !razorpay_payment_id && !razorpay_signature) return next(new ExpressError(400,"Missing payment details"));
   const userOrderDetails=await Order.findOne({
     relatedUser:new mongoose.Types.ObjectId(userId),

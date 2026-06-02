@@ -13,20 +13,26 @@ const Navbar = () => {
   return (
     <div className="bg-black text-gray-400 fixed top-0 w-full h-[50px] flex justify-between items-center z-1">
       <div>
-        <Link className="ml-[10px] text-lg hover:text-white" to="/" >
+        <Link className="ml-[10px] text-lg hover:text-white" to="/">
           Home
         </Link>
-        {isLoggedIn && isLoggedIn?.role==="admin" && (
+        {isLoggedIn && isLoggedIn?.role === "admin" && (
           <Link className="ml-[10px] hover:text-white" to="/addItem">
             AddItem
           </Link>
         )}
-        <Link className="ml-[10px]" to={"/cart-items"}>
-          Cart Items
-        </Link>
+        {isLoggedIn && isLoggedIn?.role === "admin" ? (
+          <Link className="ml-[10px]" to={"/orders"}>
+            Orders
+          </Link>
+        ) : (
+          <Link className="ml-[10px]" to={"/cart-items"}>
+            Cart_Items
+          </Link>
+        )}
       </div>
       <div className="relative">
-        {!isLoggedIn || isLoggedIn.username==="Guest" ? (
+        {!isLoggedIn || isLoggedIn.username === "Guest" ? (
           <Link className="ml-[10px] mr-[10px] hover:text-white" to="/log-in">
             Log-in
           </Link>
@@ -41,16 +47,20 @@ const Navbar = () => {
         {user && (
           <div className="absolute top-12 right-4 bg-gray-300 p-4 ml-2 rounded-sm shadow-2xl">
             <p className="text-xl text-black">{isLoggedIn?.username}</p>
-            {isLoggedIn?.username!="Guest" && <p className="text-lg text-black">{isLoggedIn?.email}</p>}
-            {isLoggedIn?.username!="Guest" && <span
-              className="mr-[10px] cursor-pointer text-xl text-black"
-              onClick={() => {
-                LogoutUser();
-                handleDropdown();
-              }}
-            >
-              Logout
-            </span>}
+            {isLoggedIn?.username != "Guest" && (
+              <p className="text-lg text-black">{isLoggedIn?.email}</p>
+            )}
+            {isLoggedIn?.username != "Guest" && (
+              <span
+                className="mr-[10px] cursor-pointer text-xl text-black"
+                onClick={() => {
+                  LogoutUser();
+                  handleDropdown();
+                }}
+              >
+                Logout
+              </span>
+            )}
           </div>
         )}
       </div>

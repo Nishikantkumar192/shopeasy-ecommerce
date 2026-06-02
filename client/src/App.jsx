@@ -11,6 +11,7 @@ import ParticularProductDetails from "./pages/ParticularProductDetails";
 import CartItems from "./pages/CartItems";
 import FilterProducts from "./pages/FilterProducts";
 import ForgetForm from "./pages/ForgetForm";
+import Orders from "./pages/Orders";
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
             element={<UpdateProductDetails />}
           />
           <Route exact path="/cart-items" element={<CartItems />} />
+          <Route exact path="/orders" element={<Orders/>}/>
           <Route exact path="/filter-products" element={<FilterProducts />} />
         </Routes>
       </NoteState>
