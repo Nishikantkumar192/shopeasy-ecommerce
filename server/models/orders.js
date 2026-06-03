@@ -32,6 +32,10 @@ const orderSchema = new mongoose.Schema(
       type: String,
       default: "pending",
     },
+    orderStatus:{
+      type:String,
+      default:"Placed",
+    }
   },
   { timestamps: true },
 );

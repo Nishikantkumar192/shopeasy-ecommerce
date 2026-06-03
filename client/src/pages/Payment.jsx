@@ -1,34 +1,39 @@
 import React from "react";
 import api from "../api/axios";
+import { toast } from "react-toastify";
 const Payment = (props) => {
   const handlePayment = async () => {
-    const { data } = await api.post("/api/order/create-order", {
-      amount: props.totalAmount,
-      products: props.products,
-    });
-    const options = {
-      key: "rzp_test_Sd5LIu1YzylBAa",
-      amount: data.order.amount * 100,
-      currency: "INR",
-      name: "shopeasy",
-      description: "Order Payment",
-      order_id: data.order.orderId,
-      handler: async function (response) {
-        try {
-          const verify = await api.post("/api/order/verifyPayment", {
-            razorpay_order_id: response.razorpay_order_id,
-            razorpay_payment_id: response.razorpay_payment_id,
-            razorpay_signature: response.razorpay_signature,
-          });
-        if (verify.data.success) {
-          alert("payment successful!");
-        }
-        } catch (err) {
-          console.log("error",err.response?.data);
-          console.log(err);
-        }
-      },
-    };
+    try {
+      const { data } = await api.post("/api/order/create-order", {
+        amount: props.totalAmount,
+        products: props.products,
+      });
+      const options = {
+        key: "rzp_test_Sd5LIu1YzylBAa",
+        amount: data.order.amount * 100,
+        currency: "INR",
+        name: "shopeasy",
+        description: "Order Payment",
+        order_id: data.order.orderId,
+        handler: async function (response) {
+          try {
+            const verify = await api.post("/api/order/verifyPayment", {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            });
+            if (verify.data.success) {
+              alert("payment successful!");
+            }
+          } catch (err) {
+            console.log("error", err.response?.data);
+            console.log(err);
+          }
+        },
+      };
+    } catch (err) {
+      toast.error(err.response?.data?.message || err.message);
+    }
     const rzp = new window.Razorpay(options);
     rzp.open();
   };
