@@ -6,7 +6,7 @@ const { newItem, updateItemInformation, deleteItem, getItemDetails, getProducts,
 const { isAdmin,isUserExist } = require("../middleware");
 const router=express.Router();
 
-router.get("/getDetail/:id",getDetail);
+router.post("/getDetail/:id",getDetail);
 router.get("/getProducts",getProducts);
 router.post("/newItem",isUserExist,isAdmin,upload.single("image"),newItem);
 router.get("/updateItemInformation/:id",isUserExist,isAdmin,getItemDetails);

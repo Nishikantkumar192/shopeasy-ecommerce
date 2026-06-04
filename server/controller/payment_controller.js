@@ -20,7 +20,7 @@ module.exports.orderCreation = wrapAsync(async (req, res, next) => {
   };
     const razorpayOrder = await razorpay.orders.create(options);
     const order=await Order.create({
-      amount:razorpayOrder.amount,
+      amount:razorpayOrder.amount/100,
       relatedUser:userId,
       products:products,
       orderId:razorpayOrder.id,

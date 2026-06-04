@@ -25,7 +25,7 @@ const CartItems = () => {
     );
   }
   const products=items.map((item)=>({
-    productId:item._id,
+    productId:item.relatedProduct._id,
     quantity:item.quantity,
   }));
   const totalOldPrice = items.reduce(

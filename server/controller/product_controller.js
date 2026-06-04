@@ -57,9 +57,10 @@ module.exports.deleteItem = wrapAsync(async (req, res, next) => {
   return res.json({ success: true, message: "Item Deleted Successfully" });
 });
 
-module.exports.getDetail=wrapAsync(async(req,res)=>{
+module.exports.getDetail=wrapAsync(async(req,res,next)=>{
   const {id}=req.params;
   const product=await Product.findById(id);
+  if(!product) return next(new ExpressError(404,"Not a valid Search"));
   return res.json({success:true,product});
 })
 

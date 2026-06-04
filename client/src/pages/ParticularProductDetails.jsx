@@ -92,25 +92,25 @@ const ParticularProductDetails = () => {
 
             {/* buttons */}
             <div>
-              <button
+              {isLoggedIn && isLoggedIn.role!="admin"  && <button
                 className="bg-yellow-500 p-2 hover:opacity-80 rounded-lg text-xl m-4"
                 onClick={() => addToCart()}
               >
                 Add To Cart
-              </button>
-              <button
+              </button>}
+              {isLoggedIn && isLoggedIn.role!="admin" && <button
                 className="bg-orange-400 p-2 hover:opacity-80 rounded-lg text-xl m-4"
                 onClick={() => BuyNow()}
               >
                 Buy Now
-              </button>
-              {isLoggedIn!=null && isLoggedIn.user?.role!="user" && <Link
+              </button>}
+              {isLoggedIn && isLoggedIn.role==="admin" && <Link
                 className="bg-green-600 p-2 hover:opacity-80 px-4 rounded-lg text-xl m-4"
                 to={`/updateItemInformation/${specificItem._id}`}
               >
                 Update
               </Link>}
-              {isLoggedIn!=null && isLoggedIn!="user" && <button
+              {isLoggedIn && isLoggedIn.role==="admin" && <button
                 className="bg-black text-white p-2 px-4 hover:opacity-80 rounded-lg text-xl m-4"
                 onClick={() => deleteProduct(specificItem._id)}
               >

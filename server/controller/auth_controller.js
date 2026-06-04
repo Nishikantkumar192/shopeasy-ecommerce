@@ -179,6 +179,7 @@ module.exports.isLoggedIn=wrapAsync(async(req,res)=>{
     user={
       userId,
       username:"Guest",
+      role:"guest",
     }
   }
   return res.json({success:true,user});

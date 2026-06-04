@@ -9,7 +9,7 @@ module.exports.fetchOrders=wrapAsync(async(req,res,next)=>{
 });
 module.exports.specificOrderDetails=wrapAsync(async(req,res,next)=>{
     const {id}=req.params;
-    const orderDetails=await Order.findById(id);
+    const orderDetails=await Order.findById(id).populate("relatedUser").populate("products.productId");
     if(!orderDetails) return next(new ExpressError(404,"Order doesn't exist"));
     return res.json({status:true,orderDetails});
 })

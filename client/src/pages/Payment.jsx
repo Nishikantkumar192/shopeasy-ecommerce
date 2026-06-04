@@ -10,7 +10,7 @@ const Payment = (props) => {
       });
       const options = {
         key: "rzp_test_Sd5LIu1YzylBAa",
-        amount: data.order.amount * 100,
+        amount: data.order.amount,
         currency: "INR",
         name: "shopeasy",
         description: "Order Payment",
@@ -31,11 +31,11 @@ const Payment = (props) => {
           }
         },
       };
+      const rzp = new window.Razorpay(options);
+      rzp.open();
     } catch (err) {
       toast.error(err.response?.data?.message || err.message);
     }
-    const rzp = new window.Razorpay(options);
-    rzp.open();
   };
   return (
     <div className="w-full font-medium p-4 bg-orange-500 shadow-lg text-2xl flex justify-between items-center">

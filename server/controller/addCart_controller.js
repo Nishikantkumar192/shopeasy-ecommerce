@@ -40,14 +40,6 @@ module.exports.addToCart = wrapAsync(async (req, res) => {
 module.exports.getCartItems = wrapAsync(async (req, res) => {
   const { userId, loginUser } = req.user;
   if (loginUser === "user") {
-    const user = await User.findById(userId);
-    if (user && user.role === "admin") {
-      const AdminPortalCartInfo =
-        await Cart.find().populate("relatedProduct");
-      return res.json(AdminPortalCartInfo);
-    }
-  }
-  if (loginUser === "user") {
     const products = await Cart.find({
       relatedUser: new mongoose.Types.ObjectId(userId),
     }).populate("relatedProduct");

@@ -11,7 +11,6 @@ const Orders = () => {
     const fetchOrders=async()=>{
         try{
             const {data}=await api.get("/api/orders/fetchOrders");
-            // console.log(data.orders);
             setOrders(data.orders);
         }catch(err){
             toast.error(err.response?.data?.message || err.message);

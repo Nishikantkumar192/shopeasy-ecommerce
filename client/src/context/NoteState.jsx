@@ -83,7 +83,7 @@ const NoteState = (props) => {
 
   const getSpecificDetail=async(id)=>{
       try{
-        const {data}=await api.get(`/api/product/getDetail/${id}`);
+        const {data}=await api.post(`/api/product/getDetail/${id}`);
         setSpecificItem(data.product);
       }catch(err){
         toast.error(err.respone?.data?.message || err.message);
