@@ -35,6 +35,10 @@ const orderSchema = new mongoose.Schema(
     orderStatus:{
       type:String,
       default:"Placed",
+    },
+    hideForUser:{
+      type:Boolean,
+      default:false
     }
   },
   { timestamps: true },

@@ -13,6 +13,7 @@ import FilterProducts from "./pages/FilterProducts";
 import ForgetForm from "./pages/ForgetForm";
 import Orders from "./pages/Orders";
 import DisplaySpecificOrderDetails from "./pages/DisplaySpecificOrderDetails";
+import MyOrders from "./pages/MyOrders";
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
           <Route exact path="/orders" element={<Orders/>}/>
           <Route exact path="/filter-products" element={<FilterProducts />} />
           <Route exact path="/order-related-to-user/:id" element={<DisplaySpecificOrderDetails/>}/>
+          <Route exact path="/my-orders" element={<MyOrders/>}/>
         </Routes>
       </NoteState>
     </Router>

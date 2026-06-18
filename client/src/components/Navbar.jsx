@@ -11,7 +11,7 @@ const Navbar = () => {
     else setUser(true);
   };
   return (
-    <div className="bg-black text-gray-400 fixed top-0 w-full h-[50px] flex justify-between items-center z-1">
+    <div className="bg-black text-gray-400 sticky top-0 w-full h-[50px] flex justify-between items-center z-50">
       <div>
         <Link className="ml-[10px] text-lg hover:text-white" to="/">
           Home
@@ -30,6 +30,7 @@ const Navbar = () => {
             Cart_Items
           </Link>
         )}
+        {isLoggedIn && isLoggedIn?.role!=="admin" && <Link to={"/my-orders"} className="ml-[10px]">My-orders</Link>}
       </div>
       <div className="relative">
         {!isLoggedIn || isLoggedIn.username === "Guest" ? (

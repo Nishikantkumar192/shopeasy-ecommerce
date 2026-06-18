@@ -1,8 +1,10 @@
 const Product = require("../models/product.js");
+const User = require("../models/user.js");
 const ExpressError = require("../utils/ExpressError.js");
 const { wrapAsync } = require("../utils/wrapAsync.js");
 
-module.exports.newItem = wrapAsync(async (req, res) => {
+module.exports.newItem = wrapAsync(async (req, res,next) => {
+  if(!req.file) return next(new ExpressError(400,"Image is required"));
   const url = req.file.path;
   const filename = req.file.filename;
   const product = {
@@ -33,10 +35,14 @@ module.exports.getItemDetails = wrapAsync(async (req, res, next) => {
 
 module.exports.updateItemInformation = wrapAsync(async (req, res, next) => {
   const { id } = req.params;
+  const {userId}=req.user;
   const item = await Product.findById(id);
   if (!item) {
     return next(new ExpressError(404, "UnAvailable product"));
   }
+  const user=await User.findById(userId);
+  if(!user) return next(new ExpressError(400,"user doesn't exist"));
+  if(user.role!=="admin") return next(new ExpressError(403,"Permission denied"));
   //check if the details come from the body then update them otherwise remains other unchanged.
   if(req.file){
     item.image.url=req.file.path;
@@ -64,10 +70,11 @@ module.exports.getDetail=wrapAsync(async(req,res,next)=>{
   return res.json({success:true,product});
 })
 
-module.exports.filterProducts=wrapAsync(async(req,res)=>{
+module.exports.filterProducts=wrapAsync(async(req,res,next)=>{
   const {search}=req.query;
   // console.log(req.query);
   // we will use {search} because req.query has { search:query };
+  if(!search?.trim()) return next(new ExpressError(400,"Search is required"));
   const searchProducts=await Product.find({
   $or: [
     { name: { $regex: search, $options: "i" } },
