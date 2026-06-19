@@ -5,8 +5,8 @@ import { useContext } from "react";
 import NoteContext from "../context/NoteContext";
 
 const ShowProduct = ({ item, quantity, updatedAt }) => {
-  const context=useContext(NoteContext);
-  const {Add_To_Deletion}=context;
+  const context = useContext(NoteContext);
+  const { Add_To_Deletion, isLoggedIn } = context;
   const formatDate = (date) => {
     return new Date(date).toLocaleString("en-IN", {
       timeZone: "Asia/Kolkata",
@@ -55,12 +55,18 @@ const ShowProduct = ({ item, quantity, updatedAt }) => {
           >
             {item?.isAvailable ? "In Stock ✅" : "Out of Stock ❌"}
           </p>
-          <p
-            className="bg-black text-white text-center w-full text-xl py-2 mt-4 hover:bg-gray-600 hover:text-red-800"
-            onClick={(e) => {Add_To_Deletion(item?._id),e.stopPropagation(),e.preventDefault()}}
-          >
-            Add to delete
-          </p>
+          {isLoggedIn && isLoggedIn?.role === "admin" && (
+            <p
+              className="bg-black text-white text-center w-full text-xl py-2 mt-4 hover:bg-gray-600 hover:text-red-800"
+              onClick={(e) => {
+                (Add_To_Deletion(item?._id),
+                  e.stopPropagation(),
+                  e.preventDefault());
+              }}
+            >
+              Add to delete
+            </p>
+          )}
           {quantity && (
             <p className="text-xl text-red-400">Quantity: {quantity}</p>
           )}
