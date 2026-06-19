@@ -39,6 +39,12 @@ I recently implemented the **backend payment logic using Razorpay** to understan
 
 ---
 
+## 📦 Order Management
+
+- Users can hide/remove order history from their account view
+- Order data remains preserved in the database
+- Order visibility managed separately for users
+
 ## 🛠️ Tech Stack
 
 - **Frontend:** React.js (Deployed on Vercel)  
@@ -56,31 +62,35 @@ I recently implemented the **backend payment logic using Razorpay** to understan
 
 ---
 
+### 🔹 Additional Backend Features
+
+- Implemented order history management
+- Added user-side order history removal (without deleting records from the database)
+- Implemented bulk product deletion functionality for admins
+
 ## 📌 Current Status
 
-- ✅ Authentication system (Login/Signup)  
-- ✅ Backend payment logic implemented  
-- ⏳ Frontend payment integration pending  
-- ⏳ Order management system not implemented  
-
----
+- ✅ Order management system implemented
+- ✅ User order history management
+- ✅ Users can hide/remove order history from their account view
+- ✅ Bulk product deletion for admins
 
 ## 📚 Learnings
 
-- How payment gateways like Razorpay handle transactions  
-- Backend order creation and verification  
-- Importance of secure payment handling  
-- Real-world flow behind a “Pay” button  
-
----
+- How payment gateways like Razorpay handle transactions
+- Backend order creation and payment verification
+- Importance of secure payment validation
+- Designing an order management system
+- Managing user-specific order history visibility
+- Performing bulk database operations in MongoDB
+- Building and deploying a full-stack MERN application
 
 ## 🚧 Future Improvements
 
-- Complete frontend Razorpay checkout integration  
-- Implement order management system  
-- Add order history for users  
-- Improve UI/UX  
 - Add refund & cancellation flow  
+- Add admin dashboard for order analytics
+- Implement inventory management
+- Improve UI/UX  
 
 ---
 ## 🌐 Live Demo

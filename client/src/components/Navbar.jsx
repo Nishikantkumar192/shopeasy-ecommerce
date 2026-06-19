@@ -5,7 +5,7 @@ import NoteContext from "../context/NoteContext";
 const Navbar = () => {
   const context = useContext(NoteContext);
   const [user, setUser] = useState(false);
-  const { LogoutUser, isLoggedIn } = context;
+  const { LogoutUser, isLoggedIn,removeProduct,addDelete } = context;
   const handleDropdown = () => {
     if (user) setUser(false);
     else setUser(true);
@@ -13,6 +13,7 @@ const Navbar = () => {
   return (
     <div className="bg-black text-gray-400 sticky top-0 w-full h-[50px] flex justify-between items-center z-50">
       <div>
+        {addDelete.length!==0 && <button className="ml-[10px] text-red-800 " onClick={()=>removeProduct()}>Delete</button>}
         <Link className="ml-[10px] text-lg hover:text-white" to="/">
           Home
         </Link>

@@ -10,11 +10,10 @@ const NoteState = (props) => {
   const [products, setProducts] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(null);
   const [specificItem,setSpecificItem]=useState(null);
-
+  const [addDelete,setAddDelete]=useState([]);
   useEffect(() => {
     isValid();
   }, []);
-
   const isValid = async () => {
     try {
       const {data}  = await api.get("/api/auth/isLoggedIn");
@@ -113,6 +112,18 @@ const NoteState = (props) => {
       toast.error(err.response?.data?.message || err.message);
     }
   };
+  const removeProduct=async()=>{
+    try{
+      const {data}=await api.delete("/api/product/remove-products",{data:addDelete}); //For POST and PUT/PATCH requests, Axios treats the second argument as the request body:
+      // But for DELETE, Axios's method signature is different:
+      setProducts(data.remainProduct);
+    }catch(err){
+      toast.error(err.respone?.data?.message || err.message);
+    }
+  }
+const Add_To_Deletion = (id) => {
+  setAddDelete((prev) => [...prev, id]);
+};
   const values = {
     addProduct,
     newUser,
@@ -123,7 +134,10 @@ const NoteState = (props) => {
     CallUpdateDetails,
     isLoggedIn,
     specificItem,
-    getSpecificDetail
+    getSpecificDetail,
+    Add_To_Deletion,
+    addDelete,
+    removeProduct
   };
   return (
     <div>

@@ -11,7 +11,7 @@ const SearchBar = () => {
     navigate(`/filter-products?search=${encodeURIComponent(search)}`);
   }
   return (
-    <div className="mt-[80px] p-1 flex justify-center items-center">
+    <div className="pt-4 flex justify-center items-center">
         <input
           type="text"
           name="search"

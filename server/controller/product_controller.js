@@ -85,3 +85,14 @@ module.exports.filterProducts=wrapAsync(async(req,res,next)=>{
 });
   return res.json(searchProducts);
 })
+module.exports.removeProduct=wrapAsync(async(req,res,next)=>{
+  const {userId,loginUser}=req.user;
+  const user=await User.findById(userId);
+  if(loginUser==="user" && user.role!=="admin") return next(new ExpressError(403,"Permission denied"));
+  const collections=req.body;
+  await Product.deleteMany({
+    _id: { $in: collections }
+  });
+  const remainProduct=await Product.find();
+  return res.json({success:true,message:"Deleted successfully",remainProduct});
+})

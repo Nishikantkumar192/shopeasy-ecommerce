@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import api from "../api/axios";
 import { toast } from "react-toastify";
+import { useContext } from "react";
+import NoteContext from "../context/NoteContext";
 
 const ShowProduct = ({ item, quantity, updatedAt }) => {
+  const context=useContext(NoteContext);
+  const {Add_To_Deletion}=context;
   const formatDate = (date) => {
     return new Date(date).toLocaleString("en-IN", {
       timeZone: "Asia/Kolkata",
@@ -13,14 +17,14 @@ const ShowProduct = ({ item, quantity, updatedAt }) => {
       minute: "2-digit",
     });
   };
-    const cartRemove = async() => {
-      try{
-        const { data } =await api.delete(`/api/cart/cartRemove/${item?._id}`);
-        toast.success(data.message);
-      }catch(err){
-        toast.error(err.response?.data?.message || err.message);
-      }
-    };
+  const cartRemove = async () => {
+    try {
+      const { data } = await api.delete(`/api/cart/cartRemove/${item?._id}`);
+      toast.success(data.message);
+    } catch (err) {
+      toast.error(err.response?.data?.message || err.message);
+    }
+  };
   return (
     <Link to={`/specificItem/${item?._id}`}>
       <div className="bg-white rounded-lg w-80 shadow-2xl hover:opacity-90 p-4">
@@ -51,6 +55,12 @@ const ShowProduct = ({ item, quantity, updatedAt }) => {
           >
             {item?.isAvailable ? "In Stock ✅" : "Out of Stock ❌"}
           </p>
+          <p
+            className="bg-black text-white text-center w-full text-xl py-2 mt-4 hover:bg-gray-600 hover:text-red-800"
+            onClick={(e) => {Add_To_Deletion(item?._id),e.stopPropagation(),e.preventDefault()}}
+          >
+            Add to delete
+          </p>
           {quantity && (
             <p className="text-xl text-red-400">Quantity: {quantity}</p>
           )}
@@ -58,7 +68,9 @@ const ShowProduct = ({ item, quantity, updatedAt }) => {
         </div>
         {quantity && (
           <button
-            onClick={(e)=>{e.preventDefault(),e.stopPropagation(),cartRemove()}}
+            onClick={(e) => {
+              (e.preventDefault(), e.stopPropagation(), cartRemove());
+            }}
             className="bg-black text-white px-4 py-2 text-center rounded-md cursor-pointer"
           >
             Remove
