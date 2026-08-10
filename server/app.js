@@ -13,6 +13,7 @@ const cartRouter=require("./routes/cart_routes.js");
 const reviewRouter=require("./routes/review_routes.js");
 const paymentRouter=require("./routes/paymentRoutes.js");
 const orderRouter=require("./routes/orders_routes.js");
+const checkBackendRouter=require("./routes/checkBackend_routes.js");
 const ExpressError = require("./utils/ExpressError.js");
 
 const dbUrl=process.env.MONGODB_URL;
@@ -40,6 +41,7 @@ app.use("/api/cart",cartRouter);
 app.use("/api/review",reviewRouter);
 app.use("/api/order",paymentRouter);
 app.use("/api/orders",orderRouter);
+app.use("/api/check",checkBackendRouter);
 
 app.use((req,res,next)=>{
     return next(new ExpressError(400,"Page Not Found"));

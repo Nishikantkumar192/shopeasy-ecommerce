@@ -17,7 +17,7 @@ const Orders = () => {
         }
     }
   return (
-    <div className='flex justify-center flex-wrap min-h-screen bg-black mt-12'>
+    <div className='flex justify-center flex-wrap min-h-screen bg-black border-t'>
         {order.map((obj)=>{
             return <ShowOrder obj={obj} key={obj._id}/>
         })}

@@ -10,7 +10,7 @@ const FilterProducts = () => {
     // console.log(location);
     //location is an object in which search exits which tells what the user is passing in search.
     const query=new URLSearchParams(location.search).get("search");
-    // new URLSearchParams convets "?search=hat" to an object which will contain
+    // new URLSearchParams converts "?search=hat" to an object which will contain
     // {  search:hat } then .get("search") will extract the value (hat) from search and save in query.
 
     useEffect(()=>{

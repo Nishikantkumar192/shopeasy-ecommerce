@@ -3,8 +3,8 @@ const {
   register,
   login,
   logout,
-  verificationOtp,
-  verifyOtp,
+  // verificationOtp,
+  // verifyOtp,
   isLoggedIn,
   forgetPassword,
   sendOtp,
@@ -19,6 +19,6 @@ router.post("/login", login);
 router.get("/logout", logout);
 router.post("/sendOtp", sendOtp);
 router.post("/forget-password",isEmailTokenExist,forgetPassword);
-router.get("/otpVerification", isUserExist, verificationOtp);
-router.post("/verifyOtp", isUserExist, verifyOtp);
+// router.get("/otpVerification", isUserExist, verificationOtp);
+// router.post("/verifyOtp", isUserExist, verifyOtp);
 module.exports = router;

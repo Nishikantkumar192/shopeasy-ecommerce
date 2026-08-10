@@ -1,20 +1,21 @@
 const { wrapAsync } = require("../utils/wrapAsync");
 const Review=require("../models/review.js");
 const ExpressError=require("../utils/ExpressError.js");
+const { default: mongoose, mongo } = require("mongoose");
 module.exports.createReview=wrapAsync(async(req,res,next)=>{
     const {id}=req.params;
     const {userId,loginUser}=req.user;
     if(loginUser==="guest") return next(new ExpressError(403,"Permission denied"))
     const newReview=await Review.create({
         ...req.body,
-        relatedUser:userId,
-        relatedProduct:id,
+        relatedUser:new mongoose.Types.ObjectId(userId),
+        relatedProduct:new mongoose.Types.ObjectId(id)
     });
     return res.json({success:true,message:"Submitted succfully",newReview});
 });
 module.exports.getReviews=wrapAsync(async(req,res)=>{
     const {id}=req.params;
-    const reviews=await Review.find({relatedProduct:id}).populate("relatedUser");
+    const reviews=await Review.find({relatedProduct:new mongoose.Types.ObjectId(id)}).populate("relatedUser");
     return res.json({success:true,reviews});
 })
 module.exports.deleteReview=wrapAsync(async(req,res,next)=>{

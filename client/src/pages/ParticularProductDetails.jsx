@@ -130,7 +130,7 @@ const ParticularProductDetails = () => {
               <DisplayReviews
                 review={comment.review}
                 rating={comment.rating}
-                user={comment.relatedUser}
+                username={comment.relatedUser.username}
                 id={comment._id}
                 setDetails={setDetails}
                 details={details}

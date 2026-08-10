@@ -119,57 +119,59 @@ module.exports.forgetPassword=wrapAsync(async(req,res,next)=>{
   return res.json({success:true,message:"Password changed successfully"});
 })
 
-module.exports.verificationOtp = wrapAsync(async (req, res, next) => {
-  const userId = req.user.emailToken_id;
-  const user = await User.findById(userId);
-  const otp = Math.floor(100000 + Math.random() * 900000);
-  const emailSend = {
-    from: `ShopEasy Team <${process.env.SENDER_EMAIL}>`,
-    to: user.email,
-    subject: "Verifiy Your Account",
-    text: `Hello ${user.username},
-                Thank you for creating an account with ShopEasy.
-                To verify your email address, please use the following One-Time Password (OTP):
-                OTP: ${otp}
-                This OTP is valid for a limited time. Please do not share this code with anyone.
-                If you did not request this verification, please ignore this email.
-                Best regards,
-                ShopEasy Team`,
-  };
-  user.verifyOtpExpireAt = Date.now() + 5 * 60 * 1000;
-  user.verifyOtp = otp;
-  await user.save();
-  try {
-    await transporter.sendMail(emailSend);
-  } catch (err) {
-    return next(
-      new ExpressError(500, "Failed to send OTP. Please try again later."),
-    );
-  }
-  return res.json({
-    success: true,
-    message: "verification OTP send successfully",
-  });
-});
+//   THIS IS REQUIRED ONLY FOR ACCOUNT VERIFICATION.
 
-module.exports.verifyOtp = wrapAsync(async (req, res, next) => {
-  const userId = req.user.id;
-  const { otp } = req.body;
-  const user = await User.findById(userId);
-  if (user.verifyOtpExpireAt < Date.now()) {
-    return next(new ExpressError(400, "OTP Expired"));
-  }
-  if (otp !== user.verifyOtp) {
-    return next(new ExpressError(400, "Invalid OTP"));
-  }
-  user.verifyOtp = "";
-  user.verifyOtpExpireAt = 0;
-  await user.save();
-  return res.json({
-    success: true,
-    message: "Account Verified Successfully",
-  });
-});
+// module.exports.verificationOtp = wrapAsync(async (req, res, next) => {
+//   const userId = req.user.emailToken_id;
+//   const user = await User.findById(userId);
+//   const otp = Math.floor(100000 + Math.random() * 900000);
+//   const emailSend = {
+//     from: `ShopEasy Team <${process.env.SENDER_EMAIL}>`,
+//     to: user.email,
+//     subject: "Verifiy Your Account",
+//     text: `Hello ${user.username},
+//                 Thank you for creating an account with ShopEasy.
+//                 To verify your email address, please use the following One-Time Password (OTP):
+//                 OTP: ${otp}
+//                 This OTP is valid for a limited time. Please do not share this code with anyone.
+//                 If you did not request this verification, please ignore this email.
+//                 Best regards,
+//                 ShopEasy Team`,
+//   };
+//   user.verifyOtpExpireAt = Date.now() + 5 * 60 * 1000;
+//   user.verifyOtp = otp;
+//   await user.save();
+//   try {
+//     await transporter.sendMail(emailSend);
+//   } catch (err) {
+//     return next(
+//       new ExpressError(500, "Failed to send OTP. Please try again later."),
+//     );
+//   }
+//   return res.json({
+//     success: true,
+//     message: "verification OTP send successfully",
+//   });
+// });
+
+// module.exports.verifyOtp = wrapAsync(async (req, res, next) => {
+//   const userId = req.user.id;
+//   const { otp } = req.body;
+//   const user = await User.findById(userId);
+//   if (user.verifyOtpExpireAt < Date.now()) {
+//     return next(new ExpressError(400, "OTP Expired"));
+//   }
+//   if (otp !== user.verifyOtp) {
+//     return next(new ExpressError(400, "Invalid OTP"));
+//   }
+//   user.verifyOtp = "";
+//   user.verifyOtpExpireAt = 0;
+//   await user.save();
+//   return res.json({
+//     success: true,
+//     message: "Account Verified Successfully",
+//   });
+// });
 
 module.exports.isLoggedIn=wrapAsync(async(req,res)=>{
   const {userId,loginUser}=req.user;

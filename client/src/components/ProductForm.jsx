@@ -40,7 +40,7 @@ const Newdetails = (props) => {
     if (e.target.name === "image") {
       setDetails({
         ...details,
-        image: e.target.files[0], //there may have many files in the array so take the first one that i user has stored
+        image: e.target.files[0], //there may have many files in the array so take the first one that a user has stored
       });
     } else {
       setDetails({
@@ -51,8 +51,10 @@ const Newdetails = (props) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("is handleSubmit working")
     const formData = new FormData(); // inbuilt js object
-    Object.keys(details).forEach((key) => {
+    
+    Object.keys(details).forEach((key) => {       //Object.keys(details) gives object keys
       if (details[key]) formData.append(key, details[key]);
     });
     if (props.type === "add") addProduct(formData);

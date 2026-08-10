@@ -74,7 +74,7 @@ module.exports.filterProducts=wrapAsync(async(req,res,next)=>{
   const {search}=req.query;
   // console.log(req.query);
   // we will use {search} because req.query has { search:query };
-  if(!search?.trim()) return next(new ExpressError(400,"Search is required"));
+  if(!search?.trim()) return next(new ExpressError(403,"Search is required"));
   const searchProducts=await Product.find({
   $or: [
     { name: { $regex: search, $options: "i" } },

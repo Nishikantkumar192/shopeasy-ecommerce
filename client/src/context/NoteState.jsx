@@ -11,9 +11,19 @@ const NoteState = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
   const [specificItem,setSpecificItem]=useState(null);
   const [addDelete,setAddDelete]=useState([]);
+  const [loading,setLoading]=useState(true);
   useEffect(() => {
     isValid();
+    checkBackend();
   }, []);
+  const checkBackend=async()=>{
+    try{
+      const {data}=await api.get("/api/check/isWorking");
+      setLoading(false);
+    }catch(err){
+      toast.error(err.response?.data?.message || err.message);
+    }
+  }
   const isValid = async () => {
     try {
       const {data}  = await api.get("/api/auth/isLoggedIn");
@@ -36,13 +46,9 @@ const NoteState = (props) => {
   const newUser = async (url, input) => {
     try {
       const { data } = await api.post(url, input);
-      if (data.success) {
         setIsLoggedIn(data.user);
         navigate("/");
         toast.success(data.message);
-      } else {
-        toast.error(data.message);
-      }
     } catch (err) {
       toast.error(err.response?.data?.message || err.message);
 
@@ -137,7 +143,8 @@ const Add_To_Deletion = (id) => {
     getSpecificDetail,
     Add_To_Deletion,
     addDelete,
-    removeProduct
+    removeProduct,
+    loading,
   };
   return (
     <div>

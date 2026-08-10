@@ -4,17 +4,18 @@ import DisplayProduct from "./DisplayProduct";
 import SearchBar from "../components/SearchBar";
 const Home = () => {
   const context=useContext(NoteContext);
-  const {getProducts,products}=context;
-  if(!products){
-    <div className="flex flex-col justify-center items-center">
-      <div>
-        <h1 className="text-2xl mt-12">Loading....</h1>
-      </div>
-    </div>
-  }
+  const {getProducts,products,loading}=context;
   useEffect(()=>{
     getProducts();
   },[])
+
+  if(loading){
+    return(
+      <div className="bg-[url(/images/offlineImage.jpeg)] z-50 bg-cover bg-center min-h-screen">
+      </div>
+    )
+  }
+
   return (
     <>
     <SearchBar/>
