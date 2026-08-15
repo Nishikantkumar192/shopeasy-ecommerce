@@ -9,25 +9,26 @@ const NoteState = (props) => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(null);
-  const [specificItem,setSpecificItem]=useState(null);
-  const [addDelete,setAddDelete]=useState([]);
-  const [loading,setLoading]=useState(true);
+  const [specificItem, setSpecificItem] = useState(null);
+  const [addDelete, setAddDelete] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [cartHistory, setCartHistory] = useState([]);
   useEffect(() => {
     isValid();
     checkBackend();
   }, []);
-  const checkBackend=async()=>{
-    try{
-      const {data}=await api.get("/api/check/isWorking");
+  const checkBackend = async () => {
+    try {
+      const { data } = await api.get("/api/check/isWorking");
       setLoading(false);
-    }catch(err){
+    } catch (err) {
       toast.error(err.response?.data?.message || err.message);
     }
-  }
+  };
   const isValid = async () => {
     try {
-      const {data}  = await api.get("/api/auth/isLoggedIn");
-        setIsLoggedIn(data.user);
+      const { data } = await api.get("/api/auth/isLoggedIn");
+      setIsLoggedIn(data.user);
     } catch (err) {
       toast.error(err.response?.data?.message || err.message);
     }
@@ -37,7 +38,7 @@ const NoteState = (props) => {
     try {
       const { data } = await api.post("/api/product/newItem", formData);
       toast.success(data.message);
-      setProducts((prev)=>prev.concat(data.newItem));
+      setProducts((prev) => prev.concat(data.newItem));
     } catch (err) {
       toast.error(err.response?.data?.message || err.message);
     }
@@ -46,9 +47,9 @@ const NoteState = (props) => {
   const newUser = async (url, input) => {
     try {
       const { data } = await api.post(url, input);
-        setIsLoggedIn(data.user);
-        navigate("/");
-        toast.success(data.message);
+      setIsLoggedIn(data.user);
+      navigate("/");
+      toast.success(data.message);
     } catch (err) {
       toast.error(err.response?.data?.message || err.message);
 
@@ -72,7 +73,7 @@ const NoteState = (props) => {
     navigate("/");
     try {
       const { data } = await api.get("/api/auth/logout");
-        toast.success(data.message);
+      toast.success(data.message);
     } catch (err) {
       toast.error(err.response?.data?.message || err.message);
     }
@@ -86,22 +87,22 @@ const NoteState = (props) => {
     }
   };
 
-  const getSpecificDetail=async(id)=>{
-      try{
-        const {data}=await api.post(`/api/product/getDetail/${id}`);
-        setSpecificItem(data.product);
-      }catch(err){
-        toast.error(err.respone?.data?.message || err.message);
-      }
+  const getSpecificDetail = async (id) => {
+    try {
+      const { data } = await api.post(`/api/product/getDetail/${id}`);
+      setSpecificItem(data.product);
+    } catch (err) {
+      toast.error(err.respone?.data?.message || err.message);
     }
+  };
 
   const deleteProduct = async (id) => {
     try {
       const { data } = await api.delete(`/api/product/deleteItem/${id}`);
-        const updateChange = products.filter((product) => product._id !== id);
-        setProducts(updateChange);
-        navigate("/");
-        toast.success(data.message);
+      const updateChange = products.filter((product) => product._id !== id);
+      setProducts(updateChange);
+      navigate("/");
+      toast.success(data.message);
     } catch (err) {
       toast.error(err.response?.data?.message || err.message);
     }
@@ -118,18 +119,48 @@ const NoteState = (props) => {
       toast.error(err.response?.data?.message || err.message);
     }
   };
-  const removeProduct=async()=>{
-    try{
-      const {data}=await api.delete("/api/product/remove-products",{data:addDelete}); //For POST and PUT/PATCH requests, Axios treats the second argument as the request body:
+  const removeProduct = async () => {
+    try {
+      const { data } = await api.delete("/api/product/remove-products", {
+        data: addDelete,
+      }); //For POST and PUT/PATCH requests, Axios treats the second argument as the request body:
       // But for DELETE, Axios's method signature is different:
       setProducts(data.remainProduct);
-    }catch(err){
+    } catch (err) {
       toast.error(err.respone?.data?.message || err.message);
     }
-  }
-const Add_To_Deletion = (id) => {
-  setAddDelete((prev) => [...prev, id]);
-};
+  };
+  const Add_To_Deletion = (id) => {
+    setAddDelete((prev) => [...prev, id]);
+  };
+  const cartItems = async () => {
+    try {
+      const { data } = await api.get("/api/cart/cart-items");
+      setCartHistory(data);
+    } catch (err) {
+      toast.error(err.response?.data?.message || err.message);
+    }
+  };
+  const cartRemove = async (id) => {
+    try {
+      const { data } = await api.delete(`/api/cart/cartRemove/${id}`);
+      toast.success(data.message);
+      setCartHistory(data);
+    } catch (err) {
+      toast.error(err.response?.data?.message || err.message);
+    }
+  };
+
+  const addToCart = async (id) => {
+    navigate(`/cart-items`);
+    try {
+      const { data } = await api.get(`/api/cart/addToCart/${id}`);
+      toast.success(data.message);
+      setCartHistory(data.cartItems)
+    } catch (err) {
+      toast.error(err.response?.data?.message || err.message);
+    }
+  };
   const values = {
     addProduct,
     newUser,
@@ -145,6 +176,10 @@ const Add_To_Deletion = (id) => {
     addDelete,
     removeProduct,
     loading,
+    cartHistory,
+    cartItems,
+    cartRemove,
+    addToCart
   };
   return (
     <div>

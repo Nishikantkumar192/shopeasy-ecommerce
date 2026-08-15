@@ -6,7 +6,7 @@ import NoteContext from "../context/NoteContext";
 
 const ShowProduct = ({ item, quantity, updatedAt }) => {
   const context = useContext(NoteContext);
-  const { Add_To_Deletion, isLoggedIn } = context;
+  const { Add_To_Deletion, isLoggedIn,cartRemove } = context;
   const formatDate = (date) => {
     return new Date(date).toLocaleString("en-IN", {
       timeZone: "Asia/Kolkata",
@@ -16,14 +16,6 @@ const ShowProduct = ({ item, quantity, updatedAt }) => {
       hour: "2-digit",
       minute: "2-digit",
     });
-  };
-  const cartRemove = async () => {
-    try {
-      const { data } = await api.delete(`/api/cart/cartRemove/${item?._id}`);
-      toast.success(data.message);
-    } catch (err) {
-      toast.error(err.response?.data?.message || err.message);
-    }
   };
   return (
     <Link to={`/specificItem/${item?._id}`}>
@@ -75,7 +67,7 @@ const ShowProduct = ({ item, quantity, updatedAt }) => {
         {quantity && (
           <button
             onClick={(e) => {
-              (e.preventDefault(), e.stopPropagation(), cartRemove());
+              (e.preventDefault(), e.stopPropagation(), cartRemove(item?._id));
             }}
             className="bg-black text-white px-4 py-2 text-center rounded-md cursor-pointer"
           >

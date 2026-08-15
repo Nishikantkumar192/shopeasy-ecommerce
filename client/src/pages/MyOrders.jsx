@@ -42,23 +42,44 @@ const MyOrders = () => {
       </div>
     );
   }
-  return (
-    <div className="bg-red-600 min-h-screen flex flex-col p-4 gap-4">
-      {orders.map((order) => {
-        return(
-      <div className="border flex flex-wrap justify-between gap-4 p-4">
-        <div className="flex flex-wrap gap-4">
-          {order.products.map((product) => {
-          return <DisplayMyOrders obj={product} key={order._id} />;
-        })}
+return (
+  <div className="min-h-screen bg-gray-100 flex flex-col items-center gap-6 px-4 py-6">
+    {orders.map((order) => {
+      return (
+        <div
+          className="w-full max-w-5xl bg-white rounded-2xl shadow-md border border-gray-200 p-5 
+                     flex flex-wrap items-center justify-between gap-6
+                     hover:shadow-lg transition-shadow duration-200"
+        >
+          {/* Products */}
+          <div className="flex flex-wrap gap-4 flex-1">
+            {order.products.map((product) => {
+              console.log(product);
+              return (
+                <DisplayMyOrders
+                  obj={product}
+                  key={order._id}
+                />
+              );
+            })}
+          </div>
+
+          {/* Remove */}
+          <div>
+            <span
+              className="inline-block px-4 py-2 rounded-lg bg-red-50 text-red-600 
+                         font-semibold cursor-pointer hover:bg-red-600 hover:text-white 
+                         transition-all duration-200"
+              onClick={() => removeHistory(order._id)}
+            >
+              Remove
+            </span>
+          </div>
         </div>
-        <div>
-      <span className="text-xl text-bold sticky right-0" onClick={()=>removeHistory(order._id)}>X</span>
-      </div>
-      </div>)
-      })}
-    </div>
-  );
+      );
+    })}
+  </div>
+);
 };
 
 export default MyOrders;

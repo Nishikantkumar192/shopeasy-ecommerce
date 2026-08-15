@@ -4,42 +4,37 @@ import { toast } from "react-toastify";
 import ShowProduct from "../components/ShowProduct";
 import Payment from "./Payment";
 import PriceDetails from "./PriceDetails";
+import { useContext } from "react";
+import NoteContext from "../context/NoteContext";
 const CartItems = () => {
-  const [items, setItems] = useState([]);
+  const context=useContext(NoteContext);
+  const {cartItems,cartHistory}=context;
   useEffect(() => {
     cartItems();
   }, []);
-  const cartItems = async () => {
-    try {
-      const { data } = await api.get("/api/cart/cart-items");
-      setItems(data);
-    } catch (err) {
-      toast.error(err.response?.data?.message || err.message);
-    }
-  };
-  if (items.length === 0) {
+  if (cartHistory.length===0) {
     return (
       <div className="flex flex-col justify-center items-center min-h-screen">
         <h2 className="text-5xl">😕 Empty Cart</h2>
       </div>
     );
   }
-  const products=items.map((item)=>({
+  const products=cartHistory.map((item)=>({
     productId:item.relatedProduct._id,
     quantity:item.quantity,
   }));
-  const totalOldPrice = items.reduce(
+  const totalOldPrice = cartHistory.reduce(
     (total, item) => total + (item.relatedProduct?.oldPrice || 0) * item.quantity,
     0,
   );
-  const totalAmount = items.reduce(
+  const totalAmount = cartHistory.reduce(
     (total, item) => total + (item.relatedProduct?.price || 0) * item.quantity,
     0,
   );
   return (
     <div>
       <div className="flex flex-wrap justify-center items-center mt-16 gap-8 bg-gray-450 min-h-screen">
-        {items.map((product) => {
+        {cartHistory.map((product) => {
           return (
             <ShowProduct
               item={product.relatedProduct}
@@ -49,7 +44,7 @@ const CartItems = () => {
             />
           );
         })}
-      {items.length!=0 && <PriceDetails totalAmount={totalAmount} platFormCharge={11} delivaryCharge={50} totalOldPrice={totalOldPrice}/>}
+      {cartHistory && <PriceDetails totalAmount={totalAmount} platFormCharge={11} delivaryCharge={50} totalOldPrice={totalOldPrice}/>}
       </div>
       {totalAmount != 0 && (
         <Payment totalAmount={totalAmount} totalOldPrice={totalOldPrice} products={products}/>

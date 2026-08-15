@@ -13,18 +13,49 @@ const DisplayReviews = ({review,rating,username,id,setDetails,details}) => {
       toast.error(err.response?.data?.message || err.message);
     }
   }
-  return (
-      <div className="bg-yellow-900 px-4 gap-4 m-2 rounded-lg p-4 max-w-[300px]">
-        <p className="text-bold text-2xl underline">@{username}</p>
-        <p className="flex flex-wrap">
-          {Array.from({ length: rating }).map((_, i) => (
-            <span className="text-yellow-400 text-xl" key={i}><MdStarBorderPurple500/></span>
-          ))}
-        </p>
-        <p className="text-xl text-white">{review}</p>
-      <button className="bg-black text-white px-4 py-1 rounded-lg hover:opacity-75 hover:underline cursor-pointer mt-2" onClick={DeleteReview}>Delete</button>
-      </div>
-  );
+return (
+  <div
+    className="w-full max-w-md bg-white
+               border border-gray-200
+               rounded-2xl p-5
+               shadow-md
+               hover:shadow-xl
+               hover:-translate-y-1
+               transition-all duration-200"
+  >
+    <p className="text-lg font-semibold text-gray-800 underline mb-2">
+      @{username}
+    </p>
+
+    <p className="flex gap-0.5 mb-3">
+      {Array.from({ length: rating }).map((_, i) => (
+        <span
+          className="text-yellow-400 text-xl"
+          key={i}
+        >
+          <MdStarBorderPurple500 />
+        </span>
+      ))}
+    </p>
+
+    <p className="text-base text-gray-600 leading-relaxed">
+      {review}
+    </p>
+
+    <button
+      className="mt-4 bg-red-50 text-red-600
+                 border border-red-200
+                 px-4 py-2 rounded-lg
+                 font-medium
+                 hover:bg-red-600 hover:text-white
+                 transition-all duration-200
+                 cursor-pointer"
+      onClick={DeleteReview}
+    >
+      Delete
+    </button>
+  </div>
+);
 };
 
 export default DisplayReviews;

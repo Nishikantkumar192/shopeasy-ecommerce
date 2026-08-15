@@ -35,7 +35,8 @@ module.exports.addToCart = wrapAsync(async (req, res) => {
       relatedProduct: new mongoose.Types.ObjectId(id),
     });
   }
-  return res.json({ success: true, message: "Successfully Added" });
+  const cartItems=await Cart.find({relatedUser:new mongoose.Types.ObjectId(userId)});
+  return res.json({ success: true, message: "Successfully Added",cartItems });
 });
 module.exports.getCartItems = wrapAsync(async (req, res) => {
   const { userId, loginUser } = req.user;
@@ -67,32 +68,29 @@ module.exports.cartRemove = wrapAsync(async (req, res, next) => {
     });
   }
   if (!getItem) return next(new ExpressError(404, "UnAvailable product"));
-  if (
-    loginUser === "user" &&
-    !getItem.relatedUser.equals(userId)
-  )
+  if (loginUser === "user" && !getItem.relatedUser.equals(userId))
     return next(new ExpressError(403, "Permission Denied"));
-  else if (loginUser==="Guest" && getItem.guestId != userId)
+  else if (loginUser === "Guest" && getItem.guestId != userId)
     return next(new ExpressError(403, "Permission Denied"));
+  let removedCartItem = null;
   if (loginUser === "user") {
-    const removedUserCartItem = await Cart.findOneAndDelete({
+    removedCartItem = await Cart.findOneAndDelete({
       relatedUser: new mongoose.Types.ObjectId(userId),
       relatedProduct: new mongoose.Types.ObjectId(id),
     });
-    return res.json({
-      success: true,
-      message: "successfully Removed",
-      removedUserCartItem,
-    });
   } else {
-    const removedGuestCartItem = await Cart.findOneAndDelete({
+    removedCartItem = await Cart.findOneAndDelete({
       guestId: userId,
       relatedProduct: new mongoose.Types.ObjectId(id),
     });
-    return res.json({
-      success: true,
-      message: "successfully Removed",
-      removedGuestCartItem,
-    });
   }
+  const products = await Cart.find({
+    relatedUser: new mongoose.Types.ObjectId(userId),
+  }).populate("relatedProduct");
+  return res.json(products);
+  return res.json({
+    success: true,
+    message: "successfully Removed",
+    products,
+  });
 });

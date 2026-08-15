@@ -12,24 +12,15 @@ const ParticularProductDetails = () => {
   const navigate = useNavigate();
   const [details, setDetails] = useState([]);   //comment collection
   const { id } = useParams();
-  const { specificItem, getSpecificDetail, deleteProduct,isLoggedIn } =
+  const { specificItem, getSpecificDetail, deleteProduct,isLoggedIn,addToCart } =
     useContext(NoteContext);
   useEffect(() => {
     getSpecificDetail(id);
     getReviews();
   }, [id]);
 
-  const addToCart = async () => {
-    navigate(`/cart-items`);
-    try {
-      const { data } = await api.get(`/api/cart/addToCart/${id}`);
-      toast.success(data.message);
-    } catch (err) {
-      toast.error(err.response?.data?.message || err.message);
-    }
-  };
   const BuyNow=()=>{
-    addToCart();
+    addToCart(id);
   }
   const getReviews = async () => {
     try {
@@ -94,7 +85,7 @@ const ParticularProductDetails = () => {
             <div>
               {isLoggedIn && isLoggedIn.role!="admin"  && <button
                 className="bg-yellow-500 p-2 hover:opacity-80 rounded-lg text-xl m-4"
-                onClick={() => addToCart()}
+                onClick={() => addToCart(id)}
               >
                 Add To Cart
               </button>}
@@ -121,25 +112,43 @@ const ParticularProductDetails = () => {
         </div>
         {/* Reviews */}
       </div>
-      <div className="bg-yellow-100">
-        <h1 className="text-4xl text-red-800 pl-4">Leave Your Review</h1>
-        <ReviewForm id={specificItem._id} setDetails={setDetails} details={details}/>
-        <div className="flex w-full p-4 flex-wrap justify-center items-center">
-          {details.map((comment) => {
-            return (
-              <DisplayReviews
-                review={comment.review}
-                rating={comment.rating}
-                username={comment.relatedUser.username}
-                id={comment._id}
-                setDetails={setDetails}
-                details={details}
-                key={comment._id}
-              />
-            );
-          })}
-        </div>
-      </div>
+<div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-yellow-50 py-10 px-4">
+
+  <h1 className="text-3xl md:text-4xl font-bold text-gray-800 text-center mb-8">
+    Leave Your Review
+  </h1>
+
+  <div className="flex justify-center mb-10">
+    <ReviewForm
+      id={specificItem._id}
+      setDetails={setDetails}
+      details={details}
+    />
+  </div>
+
+  <div className="w-full max-w-6xl mx-auto">
+    <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
+      Customer Reviews
+    </h2>
+
+    <div className="flex w-full p-4 flex-wrap justify-center items-stretch gap-6">
+      {details.map((comment) => {
+        return (
+          <DisplayReviews
+            review={comment.review}
+            rating={comment.rating}
+            username={comment.relatedUser.username}
+            id={comment._id}
+            setDetails={setDetails}
+            details={details}
+            key={comment._id}
+          />
+        );
+      })}
+    </div>
+  </div>
+
+</div>
     </div>
   );
 };

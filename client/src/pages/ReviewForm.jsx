@@ -30,31 +30,51 @@ const ReviewForm = (props) => {
       toast.error(err.response?.data?.message || err.message);
     }
   };
-  return (
-    <div className="p-8 bg-orange-900 flex flex-col max-w-[500px] justify-center items-center rounded-lg shadow-2xl m-4">
-    <div className="w-full p-4">
+return (
+  <div className="w-full max-w-xl bg-white border border-gray-200 rounded-2xl shadow-lg p-6">
+    <div className="w-full">
       <form onSubmit={handleSubmit}>
+
+        <h2 className="text-2xl font-semibold text-gray-800 mb-5">
+          Leave Your Review
+        </h2>
+
         <StarRating
           rating={info.rating}
           setRating={(value) => setInfo({ ...info, rating: value })}
         />
+
         <textarea
-          className="bg-black text-white mt-2 mb-2 shadow-xl p-2 outline-none rounded-lg w-full max-w-[400px]"
+          className="w-full mt-4 mb-4 bg-gray-50 text-gray-800
+                     border border-gray-300 rounded-xl
+                     p-4 outline-none resize-none
+                     focus:ring-2 focus:ring-yellow-400
+                     focus:border-yellow-400
+                     transition duration-200"
           name="review"
           id="review"
           rows={6}
-          placeholder="write your review..."
+          placeholder="Write your review..."
           value={info.review}
           onChange={handleChange}
           required
-        ></textarea><br />
-        <button className="px-4 bg-green-600 rounded-lg p-2 cursor-pointer ">
-          Submit
+        ></textarea>
+
+        <button
+          className="px-6 py-2.5 bg-yellow-500 text-white
+                     font-medium rounded-lg
+                     hover:bg-yellow-600
+                     active:scale-95
+                     transition-all duration-200
+                     cursor-pointer shadow-sm"
+        >
+          Submit Review
         </button>
+
       </form>
     </div>
-    </div>
-  );
+  </div>
+);
 };
 
 export default ReviewForm;
