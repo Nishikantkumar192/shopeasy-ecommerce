@@ -7,10 +7,12 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import ReviewForm from "./ReviewForm";
 import DisplayReviews from "./DisplayReviews";
+import { IoChevronForwardCircleOutline } from "react-icons/io5";
 
 const ParticularProductDetails = () => {
   const navigate = useNavigate();
   const [details, setDetails] = useState([]);   //comment collection
+  const [imgIdx,setImgIdx]=useState(0);
   const { id } = useParams();
   const { specificItem, getSpecificDetail, deleteProduct,isLoggedIn,addToCart } =
     useContext(NoteContext);
@@ -47,12 +49,22 @@ const ParticularProductDetails = () => {
         {/* product Info div */}
         <div className="bg-white max-w-5xl w-full grid md:grid-cols-2 gap-8 p-6 rounded-lg shadow-2xl m-4">
           {/* image */}
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center relative">
+            <span className="z-90 text-4xl absolute left-8 hover:bg-red-900 hover:text-white rounded-xl rotate-180"
+             onClick={()=>setImgIdx((prev)=>
+              prev===0 ? specificItem.images.length-1 : prev-1
+             )}>
+              <IoChevronForwardCircleOutline/></span>
             <img
-              src={specificItem?.image?.url}
+              src={specificItem?.images?.[imgIdx]?.url}
               alt="product"
               className="max-h-[450px] rounded-lg hover:scale-105 transition duration-300"
             />
+            <span className="z-90 text-4xl absolute right-8 hover:bg-red-900 hover:text-white rounded-xl"
+             onClick={()=>setImgIdx((prev)=>
+              prev===specificItem.images.length-1? 0 : prev+1
+             )}>
+              <IoChevronForwardCircleOutline/></span>
           </div>
 
           {/* details */}

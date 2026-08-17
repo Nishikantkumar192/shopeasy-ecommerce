@@ -22,7 +22,7 @@ const ShowProduct = ({ item, quantity, updatedAt }) => {
       <div className="bg-white rounded-lg w-80 shadow-2xl hover:opacity-90 p-4">
         <div className="flex justify-center items-center overflow-hidden">
           <img
-            src={item?.image?.url}
+            src={item?.images[0]?.url}
             alt="product"
             className="w-full h-44 object-cover hover:scale-110 transition duration-300 rounded-lg"
           />

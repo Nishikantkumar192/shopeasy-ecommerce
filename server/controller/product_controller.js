@@ -4,12 +4,15 @@ const ExpressError = require("../utils/ExpressError.js");
 const { wrapAsync } = require("../utils/wrapAsync.js");
 
 module.exports.newItem = wrapAsync(async (req, res,next) => {
-  if(!req.file) return next(new ExpressError(400,"Image is required"));
-  const url = req.file.path;
-  const filename = req.file.filename;
+  if(!req.files) return next(new ExpressError(400,"Image is required"));
+
+  const imageCollections = req.files.map((image) => ({
+  url: image.path,
+  filename: image.filename,
+}));
   const product = {
     ...req.body,
-    image: { url, filename },
+    images: imageCollections,
   };
   const newItem = await Product.create(product);
   await newItem.save();

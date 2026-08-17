@@ -18,7 +18,7 @@ const Newdetails = (props) => {
         oldPrice:props.info.oldPrice || "",
         price: props.info.price || "",
         discount:props.info.discount || "",
-        image: null,
+        images: null,
         category: props.info.category || "",
         brand: props.info.brand || "",
       });
@@ -31,16 +31,17 @@ const Newdetails = (props) => {
     oldPrice:"",
     price: "",
     discount:"",
-    image: null, //no file selected yet
+    images: [], //no file selected yet
     category: "",
     brand: "",
   };
   const [details, setDetails] = useState(initialState);
   const handleChange = (e) => {
-    if (e.target.name === "image") {
+    if (e.target.name === "images") {
       setDetails({
         ...details,
-        image: e.target.files[0], //there may have many files in the array so take the first one that a user has stored
+        images:Array.from(e.target.files)
+        // image: e.target.files[0], //there may have many files in the array so take the first one that a user has stored
       });
     } else {
       setDetails({
@@ -51,11 +52,14 @@ const Newdetails = (props) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("is handleSubmit working")
     const formData = new FormData(); // inbuilt js object
     
     Object.keys(details).forEach((key) => {       //Object.keys(details) gives object keys
-      if (details[key]) formData.append(key, details[key]);
+      if(key==="images"){
+        details.images.forEach((image)=>{
+          formData.append(key,image)
+        })
+      }else if(details[key]) formData.append(key, details[key]);
     });
     if (props.type === "add") addProduct(formData);
     else CallUpdateDetails(formData, props.id);
@@ -134,13 +138,14 @@ const Newdetails = (props) => {
             />
           </div>
           <div>
-            <label className="font-bold" htmlFor="image">
+            <label className="font-bold" htmlFor="images">
               Product-Image
             </label>
             <input
               type="file"
-              id="image"
-              name="image"
+              id="images"
+              name="images"
+              multiple
               onChange={handleChange}
               required={props.type !== "edit"}
               className="w-full file:bg-pink-700 flex justify-center items-center file:px-4 file:py-2 file:rounded-lg mt-1 file:mr-3 file:border-0 cursor-pointer"

@@ -31,7 +31,7 @@ router.post(
   validateProduct,
   isUserExist,
   isAdmin,
-  upload.single("image"),
+  upload.array("images",5),
   newItem,
 );
 router.get("/updateItemInformation/:id", isUserExist, isAdmin, getItemDetails);
